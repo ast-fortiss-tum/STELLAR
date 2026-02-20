@@ -1,5 +1,8 @@
 # STELLAR - A Search-based Testing Framework for Large Language Model Applications 
 
+
+### 🏆 Recipient of the IEEE Computer Society TCSE Distinguished Paper Award at the 33rd IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER 2026)
+
 ![Python](https://img.shields.io/badge/Python-3.11-blue.svg)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 [![OpenSBT](https://img.shields.io/badge/built_on-OpenSBT-purple.svg)](https://github.com/opensbt/opensbt-core)
@@ -14,8 +17,6 @@ STELLAR is a modular search-based testing framework for benchmarking LLM-based a
 2. Automated test input generation using prompting and RAG-integration.
 3. Fitness evaluation leveraging LLM-based judgments alongside conventional similarity metrics (e.g., cosine similarity).
 4. Search-based fitness optimization to support effectiv/efficient failure localization.
-
-🏆 Recipient of the IEEE Computer Society TCSE Distinguished Paper Award at the 33rd IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER 2026)
 
 ## Project Structure 
 
