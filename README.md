@@ -15,6 +15,8 @@ STELLAR is a modular search-based testing framework for benchmarking LLM-based a
 3. Fitness evaluation leveraging LLM-based judgments alongside conventional similarity metrics (e.g., cosine similarity).
 4. Search-based fitness optimization to support effectiv/efficient failure localization.
 
+🏆 Recipient of the IEEE Computer Society TCSE Distinguished Paper Award at the 33rd IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER 2026)
+
 ## Project Structure 
 
 The project’s structure is outlined below as a high-level overview, omitting detailed files and scripts.
