@@ -3,10 +3,15 @@
 
 ### 🏆 Recipient of the IEEE Computer Society TCSE Distinguished Paper Award at the 33rd IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER 2026)
 
-![Python](https://img.shields.io/badge/Python-3.11-blue.svg)
-[![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
-[![OpenSBT](https://img.shields.io/badge/built_on-OpenSBT-purple.svg)](https://github.com/opensbt/opensbt-core)
-
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.11-blue.svg" alt="Python 3.11">
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-lightgrey.svg" alt="License MIT">
+  </a>
+  <a href="https://github.com/opensbt/opensbt-core">
+    <img src="https://img.shields.io/badge/built_on-OpenSBT-purple.svg" alt="Built on OpenSBT">
+  </a>
+</p>
 <p align="center">
   <img src="./figures/approach-overview.png" alt="Architecture of STELLAR" width="400">
 </p>
