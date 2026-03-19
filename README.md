@@ -1,7 +1,12 @@
-# STELLAR - A Search-based Testing Framework for Large Language Model Applications 
+<h1 align="center">STELLAR</h1>
+<h3 align="center">A Search-Based Testing Framework for Large Language Model Applications</h3>
 
+<p align="center">
+  <strong>🏆 IEEE Computer Society TCSE Distinguished Paper Award</strong><br>
+  33rd IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER 2026)
+</p>
 
-### 🏆 Recipient of the IEEE Computer Society TCSE Distinguished Paper Award at the 33rd IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER 2026)
+---
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11-blue.svg" alt="Python 3.11">
@@ -11,18 +16,27 @@
   <a href="https://github.com/opensbt/opensbt-core">
     <img src="https://img.shields.io/badge/built_on-OpenSBT-purple.svg" alt="Built on OpenSBT">
   </a>
+  <a href="https://arxiv.org/abs/2601.00497">
+    <img src="https://img.shields.io/badge/arXiv-2601.00497-b31b1b.svg" alt="arXiv Paper">
+  </a>
 </p>
+
 <p align="center">
-  <img src="./figures/approach-overview.png" alt="Architecture of STELLAR" width="400">
+  <img src="./figures/approach-overview.png" alt="Architecture of STELLAR" width="450">
 </p>
 
-STELLAR is a modular search-based testing framework for benchmarking LLM-based applications. It builds upon the <a href="https://www.github.com/opensbt">OpenSBT</a> infrastructure and is based on [Pymoo](https://pymoo.org/) 0.6.1.5. STELLAR provides the following core capabilities:
+---
 
-1. Integration of content, stylistic and perturbation features for test generation & feature constraint handling
-2. Automated test input generation using prompting and RAG-integration.
-3. Fitness evaluation leveraging LLM-based judgments alongside conventional similarity metrics (e.g., cosine similarity).
-4. Search-based fitness optimization to support effectiv/efficient failure localization.
+## Overview
 
+**STELLAR** is a modular search-based testing framework for benchmarking LLM-based applications. It builds upon the <a href="https://www.github.com/opensbt">OpenSBT</a> infrastructure and is based on Pymoo (v0.6.1.5).
+
+The framework provides the following core capabilities:
+
+1. Integration of content, stylistic, and perturbation features for test generation and constraint handling  
+2. Automated test input generation using prompting and RAG integration  
+3. Fitness evaluation leveraging LLM-based judgments alongside conventional similarity metrics (e.g., cosine similarity)  
+4. Search-based fitness optimization to support effective and efficient failure localization  
 ## Project Structure 
 
 The project’s structure is outlined below as a high-level overview, omitting detailed files and scripts.
