@@ -1,4 +1,4 @@
-<h1 align="center">STELLAR</h1>
+<h1 align="center">⭐ STELLAR</h1>
 <h3 align="center">A Search-Based Testing Framework for Large Language Model Applications</h3>
 
 <p align="center">
