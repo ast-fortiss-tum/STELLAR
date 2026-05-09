@@ -1,0 +1,14 @@
+python run_tests_safety.py \
+        --sut "dolphin3" \
+        --judge "dolphin3" \
+        --generator "dolphin3" \
+        --fitness "dolphin3" \
+        --population_size 5 \
+        --n_generations 5 \
+        --algorithm "nsga2" \
+        --max_time "00:05:00" \
+        --features_config "configs/safety_features.json"\
+        --no_wandb \
+        --no_rag \
+        --results_folder "results/tests/safety/local/" \
+        --seed 1

@@ -17,7 +17,7 @@ from opensbt.config import EXPERIMENTAL_MODE, RESULTS_FOLDER, WRITE_ALL_INDIVIDU
 from opensbt.evaluation.fitness import Fitness
 from opensbt.experiment.search_configuration import SearchConfiguration
 from opensbt.utils.sorting import get_nondominated_population
-from opensbt.visualization import output_metric, visualizer, visualizer_llm
+from opensbt.visualization import visualizer, visualizer_llm
 
 
 class SimulationResult(Result):
@@ -262,15 +262,6 @@ class SimulationResult(Result):
 
         # Mostly for algorithm evaluation relevant
 
-        try:
-            # output_metric.gd_analysis(self, save_folder)
-            output_metric.hypervolume_analysis(
-                self, save_folder, ref_point_hv=self.ref_point
-            )
-            # output_metric.spread_analysis(self, save_folder)
-        except Exception:
-            print("Hypervolume analysis not possible.")
-            pass
         if search_config is not None:
             visualizer.write_search_config(self, save_folder, search_config)
 
