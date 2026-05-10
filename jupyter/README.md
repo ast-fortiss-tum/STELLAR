@@ -42,3 +42,5 @@ jupyter notebook
 ```
 
 Select *Kernel > Change Kernel > venv*.
+
+Run the notebooks starting from the first one to setup and run the tool.

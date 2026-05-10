@@ -72,7 +72,7 @@ def send_request_poi_exists(navi_input, user_location=(39.955431, -75.154903)):
     # Remove None values
     constraints = {k: v for k, v in constraints.items() if v is not None}
 
-    url = "http://127.0.0.1:8000/poi_exists"
+    url = "http://127.0.0.1:8003/poi_exists"
     payload = {**constraints, "user_location": list(user_location)}
     headers = {"Content-Type": "application/json"}
 
@@ -116,7 +116,7 @@ def send_request_conv_navi(query):
         }
     
     """
-    url = "http://127.0.0.1:8000/query"
+    url = "http://127.0.0.1:8003/query"
 
     payload = {
         "query": query,
@@ -192,9 +192,7 @@ class IPA_YELP(Simulator):
                         poi_exists = res["exists"]
                         
                         response = send_request_conv_navi(query=utterance.question)
-                        
-                        # print(type(response))
-                        
+                                                
                         if response is not None:
                             utterance.answer = response["response"]
                             utterance.content_output_list = [
