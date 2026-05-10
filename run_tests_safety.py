@@ -60,7 +60,7 @@ def parse_args():
         "--algorithm",
         type=str,
         choices=["rs", "gs", "nsga2", "nsga2d"],
-        default="nsga2d",
+        default="nsga2",
         help="Algorithm.",
     )
     parser.add_argument(
