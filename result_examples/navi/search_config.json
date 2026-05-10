@@ -1,0 +1,28 @@
+{
+    "n_generations": 30,
+    "population_size": 20,
+    "maximal_execution_time": "03:00:00",
+    "num_offsprings": null,
+    "prob_crossover": 0.7,
+    "eta_crossover": 20,
+    "prob_mutation": 1.0,
+    "eta_mutation": 15,
+    "inner_num_gen": 4,
+    "max_tree_iterations": 4,
+    "n_func_evals_lim": 500,
+    "ref_point_hv": null,
+    "nadir": null,
+    "ideal": null,
+    "seed": null,
+    "operators": {
+        "crossover": "UtteranceCrossoverDiscrete()",
+        "sampling": "UtteranceSamplingDiscrete()",
+        "duplicate_elimination": "UtteranceDuplicateEliminationLocalDiscreteWithContent()",
+        "mutation": "UtteranceMutationDiscrete()",
+        "repair": {}
+    },
+    "n_repopulate_max": 0.2,
+    "archive_threshold": 0.1,
+    "n_samples_per_feature": 5,
+    "results_folder": "\\results\\"
+}

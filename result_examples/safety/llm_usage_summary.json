@@ -1,0 +1,327 @@
+{
+    "mock": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-3o-mini": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-35-turbo": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-4": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-4o": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-4o-mini": {
+        "input_tokens": 33350,
+        "output_tokens": 3117,
+        "total_tokens": 36467,
+        "time": 78.56559944152832,
+        "calls": 47,
+        "costs": {
+            "input": 0.005002499999999998,
+            "output": 0.001870199999999999,
+            "total": 0.006872699999999998
+        },
+        "average call time": 1.6716084987559217
+    },
+    "gpt-4.1": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-5": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-5-mini": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-5-nano": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-5-chat": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "llama3.2": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "dolphin-mistral": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "deepseek-v2": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-oss:20b": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "qwen3:14b": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "hf": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "mistral": {
+        "input_tokens": 1869,
+        "output_tokens": 7825,
+        "total_tokens": 9694,
+        "time": 117.43258500099182,
+        "calls": 20,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 5.871629250049591
+    },
+    "gemma": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "Mistral-7B-Instruct-v0.2-GPTQ": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "DeepSeek-R1-qcbar": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "DeepSeek-V3-0324": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "mainzone/dolphin-2.1-mistral-7b-uncensored": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "dolphin3": {
+        "input_tokens": 45808,
+        "output_tokens": 1203,
+        "total_tokens": 47011,
+        "time": 135.25677847862244,
+        "calls": 20,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "total": 0.0
+        },
+        "average call time": 6.762838923931122
+    },
+    "total_tokens": {
+        "input_tokens": 81027,
+        "output_tokens": 12145,
+        "total_tokens": 93172,
+        "time": 331.2549629211426,
+        "calls": 87,
+        "costs": {
+            "input": 0.005002499999999998,
+            "output": 0.001870199999999999,
+            "total": 0.006872699999999998
+        },
+        "average call time": 3.8075283094384202
+    }
+}
