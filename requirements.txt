@@ -34,5 +34,8 @@ faiss-cpu
 pronouncing
 wandb
 weave
+streamlit
+plotly
+streamlit-plotly-events
 
 pyclustering
