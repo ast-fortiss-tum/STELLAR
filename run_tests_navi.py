@@ -33,6 +33,7 @@ from datetime import datetime
 import argparse
 import warnings
 
+import warnings
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Run Navi test with selectable SUT")
