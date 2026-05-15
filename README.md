@@ -193,7 +193,26 @@ wandb.init(
 )
 ```
 
-## Replication
+## Dasboard
+
+
+STELLAR provides a Streamlit-based dashboard for interactive exploration of test results.
+
+The dashboard allows you to:
+
+- **Browse results**: Point to any results root folder and the dashboard recursively finds all completed runs.
+- **View summary metrics**: Total test cases, number of failures, and overall failure rate.
+- **Failure distribution heatmaps**: Select any two discrete input features (e.g., style, persuasion, category) and visualize failure rates as a heatmap.
+- **Filter utterances by cell**: Pick specific feature value combinations to inspect the corresponding test cases.
+- **View all failures**: Browse all critical (failure) test cases with questions, answers, and fitness scores.
+
+![Dashboard Screenshot](./figures/stellar-dashboard.gif)
+
+To start the dashboard:
+
+```bash
+streamlit run dashboard.py --server.headless true
+```
 
 ### RQ0
 
