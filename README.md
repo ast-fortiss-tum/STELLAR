@@ -17,7 +17,10 @@
     <img src="https://img.shields.io/badge/built_on-OpenSBT-purple.svg" alt="Built on OpenSBT">
   </a>
   <a href="https://arxiv.org/abs/2601.00497">
-    <img src="https://img.shields.io/badge/arXiv-2601.00497-b31b1b.svg" alt="arXiv Paper">
+    <img src="https://img.shields.io/badge/paper-2601.00497-b31b1b.svg" alt="Paper">
+  </a>
+  <a href="./jupyter/README.md">
+    <img src="https://img.shields.io/badge/Jupyter-Notebooks-F37626?logo=jupyter&logoColor=white" alt="Jupyter Notebooks">
   </a>
 </p>
 
@@ -26,6 +29,25 @@
 </p>
 
 ---
+## Updates
+
+<div style="
+    background: #fde782;
+    border:1px solid #c9daf8;
+    border-left:5px solid #fde782;
+    border-radius:12px;
+    padding:14px 18px;
+    margin:18px 0;
+    color:#1f2937;
+">
+
+<strong>Latest Updates</strong>
+
+<ul style="margin-top:10px; margin-bottom:0;">
+    <li>11-05-2026 Jupyter Notebooks added</li>
+</ul>
+
+</div>
 
 ## Overview
 
@@ -375,7 +397,7 @@ Here is an example BibTeX entry:
 
 ## License ##
 
-The software is distributed under MIT license. See the [license](/LICENSE) file.
+The software is distributed under MIT license. See the [license](./LICENSE.md) file.
 
 ## Authors
 

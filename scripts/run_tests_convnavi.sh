@@ -1,0 +1,12 @@
+DEPLOYMENT_NAME="gpt-5-chat" python run_tests_navi.py \
+        --sut "IPA_YELP" \
+        --population_size 2 \
+        --max_time "00:00:30" \
+        --algorithm "nsga2" \
+        --judge "gpt-4o-mini" \
+        --features_config "configs/navi_features.json"\
+        --th_answer 0.75 \
+        --th_content 0.75 \
+        --no_wandb \
+        --use_rag \
+        --seed 1

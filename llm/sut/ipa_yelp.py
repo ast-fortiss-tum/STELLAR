@@ -192,9 +192,7 @@ class IPA_YELP(Simulator):
                         poi_exists = res["exists"]
                         
                         response = send_request_conv_navi(query=utterance.question)
-                        
-                        # print(type(response))
-                        
+                                                
                         if response is not None:
                             utterance.answer = response["response"]
                             utterance.content_output_list = [

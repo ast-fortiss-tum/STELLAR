@@ -85,11 +85,11 @@ def create_save_folder(problem,
 
     print("[create save folder] path:", results_folder)
 
-    # here we consider the results folder already as save folder
-    if Path(results_folder).is_dir():
-        print("path is existing folder")
-        return results_folder
-    
+    # If results_folder is already a complete save folder (contains problem name),
+    # return it directly to avoid double nesting
+    if results_folder and Path(results_folder).is_dir() and problem_name in str(results_folder):
+        return str(results_folder) if str(results_folder).endswith(os.sep) else str(results_folder) + os.sep
+
     # Use default if results_folder is None
     if results_folder is None:
         results_folder = RESULTS_FOLDER

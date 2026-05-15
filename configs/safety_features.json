@@ -47,8 +47,7 @@
       "values": [
         null,
         "delete_words", 
-        "introduce_homophones_static", 
-        "introduce_fillers_llm"
+        "introduce_homophones_static"
       ],
       "distribution": null
     },
