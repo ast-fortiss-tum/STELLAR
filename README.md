@@ -397,7 +397,7 @@ Here is an example BibTeX entry:
 
 ## License ##
 
-The software is distributed under MIT license. See the [license](/LICENSE) file.
+The software is distributed under MIT license. See the [license](./LICENSE.md) file.
 
 ## Authors
 
