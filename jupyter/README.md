@@ -6,13 +6,13 @@
 
 In this folder several tutorials are provided on how to use STELLAR and apply it for a specific testing problem. The tutorials can be directly executed using the Jupyter Notebook environment to be installed in the following step.
 
-- `01_getting_started`: Installation guide and test experiments to verify that the installation is correct.
+- [`01_getting_started`](01_getting_started.ipynb): Installation guide and test experiments to verify that the installation is correct.
 
-- `02_navi`: Run experiments for the navigational use case.
+- [`02_navi`](02_navi.ipynb): Run experiments for the navigational use case.
 
-- `03_safety`: Run experiments for the safety use case.
+- [`03_safety`](03_safety.ipynb): Run experiments for the safety use case.
 
-- `04_dashboard`: Start the interactive Streamlit dashboard to analyze testing results.
+- [`04_dashboard`](04_dashboard.ipynb): Start the interactive Streamlit dashboard to analyze testing results.
 
 In case you are unable to run notebook `02_navi` and `03_safety` to obtain experimental results, we provide examples in `result_examples` directory. You can use the example outputs to visualize in the dashboard in `04_dashboard`.
 
