@@ -1,0 +1,28 @@
+# IDE
+.vscode/
+*.code-workspace
+
+# Python
+env/
+**/__pycache__/
+build/
+**/*.pyc
+dist
+
+# CARLA
+cache/
+
+# Logging
+log.txt
+
+# Results
+results/simoutput
+results/
+
+# Egg
+test_case_generation.egg-info
+
+venv/
+
+# Temporary files
+carla_simulation/temp

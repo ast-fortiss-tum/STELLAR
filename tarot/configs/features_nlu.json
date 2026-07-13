@@ -1,0 +1,66 @@
+{
+    "categorical_features": [
+      {
+        "name": "intent",
+        "values":  [
+          "INTENT_ActivateAirConditioning",
+          "INTENT_ActivateClimateSync",
+          "INTENT_ActivateFan",
+          "INTENT_ActivateSeatCooling",
+          "INTENT_ActivateSeatHeating",
+          "INTENT_ActivateSteeringWheelHeating",
+          "INTENT_DeactivateAirConditioning",
+          "INTENT_DeactivateClimateSync",
+          "INTENT_DeactivateFan",
+          "INTENT_DeactivateSeatCooling",
+          "INTENT_DeactivateSeatHeating",
+          "INTENT_DeactivateSteeringWheelHeating",
+          "INTENT_DecreaseFanSpeed",
+          "INTENT_DecreaseSeatCooling",
+          "INTENT_DecreaseSeatHeating",
+          "INTENT_DecreaseTemperature",
+          "INTENT_IncreaseFanSpeed",
+          "INTENT_IncreaseSeatCooling",
+          "INTENT_IncreaseSeatHeating",
+          "INTENT_IncreaseTemperature",
+          "INTENT_SetFanSpeed",
+          "INTENT_SetSeatCooling",
+          "INTENT_SetSeatHeating",
+          "INTENT_SetTemperature",
+          "INTENT_Unknown"
+      ],
+        "distribution": null
+      },
+      {
+        "name": "word_perturbation",
+        "values": [
+          null,
+          "delete_words_german", 
+          "introduce_fillers_llm"
+        ],
+        "distribution": null
+      }
+    ],
+    "ordinal_features": [
+      {
+        "name": "slang",
+        "values": ["formal", "neutral", "informal"],
+        "distribution": null
+      },
+      {
+        "name": "implicitness",
+        "values": ["not implicit", "slightly implicit", "implicit"],
+        "distribution": null
+      },
+      {
+        "name": "politeness",
+        "values": ["unpolite","neutral", "polite", "very polite"],
+        "distribution": null
+      },
+      {
+        "name": "anthropomorphism",
+        "values": ["very directive", "directive", "interrogative", "empathic"],
+        "distribution": null
+      }
+    ]
+  }

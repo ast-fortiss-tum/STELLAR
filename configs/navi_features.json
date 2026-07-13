@@ -1,0 +1,98 @@
+{
+  "categorical_features": [
+    {
+      "name": "category",
+      "values": 
+      [ 
+        "hospital",
+        "car_repair",
+        "restaurant",
+        "supermarket",
+        "cafe",
+        "bakery",
+        "bar",
+        "hotel",
+        "museum"
+      ],
+      "distribution": null
+    },
+    {
+      "name": "payment_method",
+      "values": [
+        null,
+        "CASH",
+        "CREDIT_CARD",
+        "CONTACTLESS",
+        "MOBILE_PAYMENT"
+      ],
+      "distribution": null
+    },
+    {
+      "name": "food_type",
+      "values": [
+        null,
+        "german",
+        "indian",
+        "italian",
+        "middle_eastern",
+        "french",
+        "chinese",
+        "japanese",
+        "thai",
+        "mexican",
+        "greek",
+        "vietnamese",
+        "turkish",
+        "american"
+      ],
+      "distribution": null
+    },
+    {
+      "name": "parking",
+      "values": [null, "available"],
+      "distribution": null
+    },
+    {
+      "name": "price_range",
+      "values": [null, "low", "medium", "high"],
+      "distribution": null
+    },
+    {
+      "name": "word_perturbation",
+      "values": [
+        null,
+        "delete_words", 
+        "introduce_homophones_static", 
+        "introduce_fillers_llm"
+      ],
+      "distribution": null
+    }
+  ],
+  "ordinal_features": [
+    {
+      "name": "rating",
+      "values": [null, 3.5, 4, 4.5, 5],
+      "distribution": null
+    },
+    {
+      "name": "slang",
+      "values": ["formal", "neutral", "slangy"],
+      "distribution": null
+    },
+    {
+      "name": "implicitness",
+      "values": ["not implicit", "slightly implicit", "implicit"],
+      "distribution": null
+    },
+    {
+      "name": "politeness",
+      "values": ["rude", "neutral", "polite"],
+      "distribution": null
+    },
+    {
+      "name": "anthropomorphism",
+      "values": ["very directive", "directive", "interrogative", "empathic"],
+      "distribution": null
+    }
+  ]
+}
