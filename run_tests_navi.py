@@ -191,11 +191,14 @@ problem_name = create_problem_name(
 
 tags = [f"{k}:{v}" for k, v in vars(args).items() if k != "features_config"]
 
+wandb_entity = os.getenv("WANDB_ENTITY", "opentest")
+wandb_project = os.getenv("WANDB_PROJECT", "demo")
+
 if not args.no_wandb:
-    weave.init("dev")
+    weave.init(wandb_project)
     wandb.init(
-        entity="opentest",                  # team
-        project="dev",                      # the project name
+        entity=wandb_entity,                 # team
+        project=wandb_project,               # the project name
         name=problem_name,          # run name
         group=datetime.now().strftime("%d-%m-%Y"),  # group by date
         tags=tags

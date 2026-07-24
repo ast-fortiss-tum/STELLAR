@@ -186,11 +186,14 @@ if __name__ == "__main__":
     tags = [f"{k}:{v}" for k, v in vars(args).items() if k != "features_config"]
     tags.append(f"features:{'astral' if 'astral' in args.features_config else 'extended'}")
 
+    wandb_entity = os.getenv("WANDB_ENTITY", "opentest")
+    wandb_project = os.getenv("WANDB_PROJECT", "demo")
+
     if not args.no_wandb:
-        weave.init("dev")
+        weave.init(wandb_project)
         wandb.init(
-            entity="opentest",                  # team
-            project="SafeLLM",                  # the project name
+            entity=wandb_entity,                 # team
+            project=wandb_project,               # the project name
             name=problem_name,                  # run name
             group=datetime.now().strftime("%d-%m-%Y"),  # group by date
             tags=tags,
