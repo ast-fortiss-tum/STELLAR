@@ -41,10 +41,9 @@ flowchart LR
     E --> B
     D --> F[Results + Dashboard\nfailures, rates, heatmaps]
 ```
-
 What each block does:
 
-- Feature Configs: define what kinds of inputs STELLAR is allowed to generate.
+- Feature Configs: defines what kinds of inputs STELLAR is allowed to generate.
 - Test Input Generator: creates candidate prompts/questions from those feature definitions.
 - SUT: the system under test (for example, a Safety QA or Navigation QA application).
 - Evaluators: score outputs and decide whether a test case is a failure.
@@ -86,13 +85,13 @@ STELLAR helps to answer:
 
 ## Features
 
-- [x] Stylistic variation (e.g., implicitness, slang, politeness, anthropomorphism)
-- [x] Perturbation simulations (e.g., fillers, word deletions, homophones, typos)
-- [x] Content variation based on domain/category definitions
-- [x] Four generation algorithms (`rs`, `nsga2`, `gs`, `astral`)
-- [x] Automated result collection and reproducible experiment outputs
-- [x] Interactive dashboard for result exploration and failure analysis
-- [x] Weight and Biases Integration for experiment tracking
+- ✅ Stylistic variation (e.g., implicitness, slang, politeness, anthropomorphism)
+- ✅ Perturbation simulations (e.g., fillers, word deletions, homophones, typos)
+- ✅ Content variation based on domain/category definitions
+- ✅ Four generation algorithms (`rs`, `nsga2`, `gs`, `astral`)
+- ✅ Automated result collection and reproducible experiment outputs
+- ✅ Interactive dashboard for result exploration and failure analysis
+- ✅ Weight and Biases Integration for experiment tracking
 
 ## Jupyter Notebooks
 
