@@ -20,7 +20,10 @@
     <img src="https://img.shields.io/badge/paper-2601.00497-b31b1b.svg" alt="Paper">
   </a>
   <a href="./jupyter/README.md">
-    <img src="https://img.shields.io/badge/Jupyter-Notebooks-F37626?logo=jupyter&logoColor=white" alt="Jupyter Notebooks">
+    <img src="https://img.shields.io/badge/Jupyter-Basic Notebooks-F37626?logo=jupyter&logoColor=white" alt="Jupyter Notebooks">
+  </a>
+  <a href="./jupyter_advanced/README.md">
+    <img src="https://img.shields.io/badge/Jupyter-Advanced Notebooks-F37626?logo=jupyter&logoColor=white" alt="Jupyter Advanced Notebooks">
   </a>
 </p>
 
@@ -79,20 +82,21 @@ STELLAR helps to answer:
 
 ## Jupyter Notebooks
 
-For interactive walkthroughs and analysis, use the notebooks in [jupyter/](jupyter/):
+Explore the jupyter notebooks to get familiar with STELLAR.
+
+### Basic Examples (NLU Testing)
 
 - [Notebook Guide](jupyter/README.md)
 - [01 Getting Started](jupyter/01_getting_started.ipynb)
-- [02 Navigation](jupyter/02_navi.ipynb)
-- [03 Safety](jupyter/03_safety.ipynb)
-- [04 Dashboard](jupyter/04_dashboard.ipynb)
+- [02 Test Chatbot](jupyter/02_test_chatbot.ipynb)
 
-## How It Works (At a Glance)
+### Advanced Examples (Safety/Navi)
 
-1. Pick an LLM application to test (for example, safety QA or navigation QA).
-2. Define which input features you want to vary in a JSON config.
-3. Run a search algorithm to generate and evaluate test cases.
-4. Inspect failures and metrics in result files or the dashboard.
+- [Notebook Guide](jupyter_advanced/README.md)
+- [01 Getting Started](jupyter_advanced/01_getting_started.ipynb)
+- [02 Navigation](jupyter_advanced/02_navi.ipynb)
+- [03 Safety](jupyter_advanced/03_safety.ipynb)
+- [04 Dashboard](jupyter_advanced/04_dashboard.ipynb)
 
 ## If You Are New to Optimization
 

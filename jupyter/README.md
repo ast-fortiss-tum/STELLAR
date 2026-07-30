@@ -1,21 +1,13 @@
-# Tutorials
-
+# Testing Natural Language Understanding of a Conversational In-Car Chatbot (TAROT 2026 - Hands-On) 🚗
 
 ## Overview
 
+In this tutorial you will be able to implement your own test generator to test automatically a task-oriented conversational in-car chatbot.
+Follow the instructions in the notebooks below after installing the jupyter environment in the following step:
 
-In this folder several tutorials are provided on how to use STELLAR and apply it for a specific testing problem. The tutorials can be directly executed using the Jupyter Notebook environment to be installed in the following step.
+- [`01_getting_started`](01_getting_started.ipynb): Installation guide.
 
-- [`01_getting_started`](01_getting_started.ipynb): Installation guide and test experiments to verify that the installation is correct.
-
-- [`02_navi`](02_navi.ipynb): Run experiments for the navigational use case.
-
-- [`03_safety`](03_safety.ipynb): Run experiments for the safety use case.
-
-- [`04_dashboard`](04_dashboard.ipynb): Start the interactive Streamlit dashboard to analyze testing results.
-
-In case you are unable to run notebook `02_navi` and `03_safety` to obtain experimental results, we provide examples in `result_examples` directory. You can use the example outputs to visualize in the dashboard in `04_dashboard`.
-
+- [`02_test_chatbot`](02_test_chatbot.ipynb): Apply STELLAR to test natural language understanding of a task oriented chatbot.
 
 ## Jupyter Installation
 
