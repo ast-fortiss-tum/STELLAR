@@ -24,9 +24,32 @@
   </a>
 </p>
 
-<p align="center">
+<!-- <p align="center">
   <img src="./figures/approach-overview.png" alt="Architecture of STELLAR" width="450">
-</p>
+</p> -->
+
+## Architecture
+
+The simplified test generation pipeline of STELLAR is as follows:
+
+```mermaid
+flowchart LR
+    A[Feature Configs\ncontent/style/perturbation] --> B[Test Input Generator\nprompting + optional RAG]
+    B --> C[SUT\nLLM app under test]
+    C --> D[Evaluators\njudge LLM + similarity metrics]
+    D --> E[Search Algorithm\nrs / gs / nsga2 / astral]
+    E --> B
+    D --> F[Results + Dashboard\nfailures, rates, heatmaps]
+```
+
+What each block does:
+
+- Feature Configs: define what kinds of inputs STELLAR is allowed to generate.
+- Test Input Generator: creates candidate prompts/questions from those feature definitions.
+- SUT: the system under test (for example, a Safety QA or Navigation QA application).
+- Evaluators: score outputs and decide whether a test case is a failure.
+- Search Algorithm: uses scores to decide which test cases to try next.
+- Results + Dashboard: stores artifacts and helps inspect failures interactively.
 
 ---
 ## Updates
@@ -51,14 +74,54 @@
 
 ## Overview
 
-**STELLAR** is a modular search-based testing framework for benchmarking LLM-based applications. It builds upon the <a href="https://www.github.com/opensbt">OpenSBT</a> infrastructure and is based on Pymoo (v0.6.1.5).
+**STELLAR** is a search-based testing framework that automatically generates and runs test cases for LLM applications and identifies where the system fails.
 
-The framework provides the following core capabilities:
+It builds upon the <a href="https://www.github.com/opensbt">OpenSBT</a> infrastructure and uses Pymoo (v0.6.1.5) for search algorithms.
 
-1. Integration of content, stylistic, and perturbation features for test generation and constraint handling  
-2. Automated test input generation using prompting and RAG integration  
-3. Fitness evaluation leveraging LLM-based judgments alongside conventional similarity metrics (e.g., cosine similarity)  
-4. Search-based fitness optimization to support effective and efficient failure localization  
+STELLAR helps to answer:
+
+- Which user inputs are most likely to break my LLM application?
+- How can I generate those inputs systematically instead of manually or randomly guessing them?
+- How often does my application fail under different input styles and constraints?
+
+## Features
+
+- [x] Stylistic variation (e.g., implicitness, slang, politeness, anthropomorphism)
+- [x] Perturbation simulations (e.g., fillers, word deletions, homophones, typos)
+- [x] Content variation based on domain/category definitions
+- [x] Four generation algorithms (`rs`, `nsga2`, `gs`, `astral`)
+- [x] Automated result collection and reproducible experiment outputs
+- [x] Interactive dashboard for result exploration and failure analysis
+- [x] Weight and Biases Integration for experiment tracking
+
+## Jupyter Notebooks
+
+For interactive walkthroughs and analysis, use the notebooks in [jupyter/](jupyter/):
+
+- [Notebook Guide](jupyter/README.md)
+- [01 Getting Started](jupyter/01_getting_started.ipynb)
+- [02 Navigation](jupyter/02_navi.ipynb)
+- [03 Safety](jupyter/03_safety.ipynb)
+- [04 Dashboard](jupyter/04_dashboard.ipynb)
+
+## How It Works (At a Glance)
+
+1. Pick an LLM application to test (for example, safety QA or navigation QA).
+2. Define which input features you want to vary in a JSON config.
+3. Run a search algorithm to generate and evaluate test cases.
+4. Inspect failures and metrics in result files or the dashboard.
+
+## If You Are New to Optimization
+
+You do not need deep optimization knowledge to run STELLAR.
+
+- Think of an **algorithm** as a strategy for selecting the next test inputs.
+- A **population** is just a batch of candidate test cases.
+- A **generation** is one iteration where candidates are evaluated and improved.
+- A **fitness score** indicates how strongly a test case exposes a target behavior (for example, unsafe or incorrect output).
+
+For first runs, use the defaults in this README, then adjust one parameter at a time.
+
 ## Project Structure 
 
 The project’s structure is outlined below as a high-level overview, omitting detailed files and scripts.
@@ -102,10 +165,20 @@ This framework integrates the following applications for testing:
 
 The configuration for LLM related experiments is done via the [config.py](./llm/config.py) as well as directly by passing arguments via flags to a corresponding function.
 
+### Quick Start
+If you are new to STELLAR, start with a small run first:
+
+1. Choose one use case: Navigation or Safety.
+2. Keep a small population and few generations (for example 5x5) so runs finish quickly.
+3. Use a local model with Ollama, or configure OpenAI via [.env](./.env).
+4. Inspect the generated folder in [results](./results/) after execution.
+
+After that, increase population size, generations, or runtime.
+
 
 ### Navigation
 
-Standalone LLM: To run a simplified example with navigation recommendation based on a pure LLM you can run (here a local LLM is used):
+Standalone LLM: run a simplified navigation recommendation example (using a local model here):
 
 ```bash
 DEPLOYMENT_NAME="llama3.2" python run_tests_navi.py \
@@ -122,7 +195,7 @@ DEPLOYMENT_NAME="llama3.2" python run_tests_navi.py \
         --seed 1
 ```
 
-RAG-based SUT: To run a more advanced example where a the RAG-based ConvNavi tool is asked to provide a place recommendation, first setup the ConvNavi tool. After running the tool in server mode, execute the following code for test generation:
+RAG-based SUT: run a more advanced setup where ConvNavi (RAG-based) provides place recommendations. First set up ConvNavi, start it in server mode, then run:
 
 ```bash
 DEPLOYMENT_NAME="llama3.2" python run_tests_navi.py \
@@ -138,11 +211,11 @@ DEPLOYMENT_NAME="llama3.2" python run_tests_navi.py \
         --seed 1
 ```
 
-The execution should generate 25 test cases and write down all results in a folder called **results**.
+This run generates 25 test cases and stores outputs in the **results** folder.
 
 ### Safety 
 
-To test standalone LLMs for handling malicious user inputs run:
+To test how a standalone LLM handles malicious user inputs, run:
 
 ```bash
 python run_tests_safety.py \
@@ -158,17 +231,29 @@ python run_tests_safety.py \
 ```        
 ## Search Configuration
 
-STELLAR distinguishes between style, content and perturbation features for test generation. 
-The features are defined in the format as shown in the navigational case study in [navi_features.json](configs/navi_features.json).
-Modify theses values to see how it affects generated test inputs.
+STELLAR distinguishes between style, content, and perturbation features for test generation.
+You define these features in config files such as [configs/navi_features.json](configs/navi_features.json).
+Modify these values to control how test inputs are generated.
 
-Following algorithms are integrated: 
+At a high level, the **algorithm** controls *how STELLAR chooses the next test cases*.
+Different algorithms trade off speed, coverage, and ability to find subtle failures.
 
-- **Random Search** (Randomized Testing) - rs
-- [**NSGA-II**](`opensbt/algorithm/nsga2_optimizer.py`) (Genetic Algorithm) - nsga2
-- [**ASTRAL**](TODO) (Full Coverage Testing Safety) - astral
-- [**T-wise**]() (Combinatorial Testing) - gs
+If you are unsure where to start:
 
+1. Keep the feature set small.
+2. Change only one feature or bound at a time.
+3. Compare failure counts and failure types across runs.
+
+### Quick Algorithm Picker
+
+| Goal | Recommended Algorithm | Flag | Why |
+|---|---|---|---|
+| Fast baseline / smoke test | Random Search | `rs` | Simple and quick; good first reference point |
+| Best failure discovery under fixed budget | NSGA-II | `nsga2` | Reuses feedback to focus on promising test cases |
+| Broad feature-interaction coverage | T-wise | `gs` | Targets combinatorial interactions systematically |
+| Safety-focused systematic exploration | ASTRAL | `astral` | Designed for full-coverage safety workflows |
+
+Recommended first path: start with **Random Search** (`rs`) for a baseline, then switch to **NSGA-II** (`nsga2`) for deeper failure discovery.
 
 Algorithms that exist in pymoo can be also used by implementing interfaces from [OpenSBT](https://opensbt.github.io/opensbt-core/).
 
@@ -180,7 +265,8 @@ We have provided interfaces and instructions as described in [CUSTOMIZATION](CUS
 ## Wandb Integration
 
 STELLAR integrates wandb for experiment progress monitoring and results tracking.
-Enable/disable wandb usage by the --wandb flag. Prior logging you need to create a Project at wandb, login via the cli passing the wandb key and update the wandb project name in the main application file. All result artefacts are uploaded to the corresponding run and can be downloaded later for analysis.
+Enable or disable wandb via the --wandb flag.
+Before logging, create a wandb project, log in with the CLI, and set the project name in the main application file. Result artifacts are uploaded to the corresponding run and can be downloaded for later analysis.
 
 ```python
 weave.init("dev")
@@ -193,7 +279,7 @@ wandb.init(
 )
 ```
 
-## Dasboard
+## Dashboard
 
 
 STELLAR provides a Streamlit-based dashboard for interactive exploration of test results.
@@ -208,15 +294,28 @@ The dashboard allows you to:
 
 ![Dashboard Screenshot](./figures/stellar-dashboard.gif)
 
-To start the dashboard:
+Start the dashboard with:
 
 ```bash
 streamlit run dashboard.py --server.headless true
 ```
 
-### RQ0
+## Replication
 
-To replicate the paper results and run the judge evaluation you can use the following script to collect judge results for a given set of question answer pairs. The backend LLM of the LLM-application can be directly set via the __deployment_name__ passed in the commands (here: gpt-4o-mini). 
+<details>
+<summary>Show replication experiments (advanced)</summary>
+
+The sections below are intended for reproducing paper-level experiments.
+If you are a first-time user, you can skip them.
+
+### Experiment A: Judge Reliability Study
+
+This experiment evaluates agreement between model-based judges and human annotations.
+
+<details>
+<summary>Show commands for Experiment A</summary>
+
+To replicate the paper results and run judge evaluation, use the following script to collect judge results for a set of question-answer pairs. The backend LLM can be set through __deployment_name__ (example: gpt-4o-mini).
 
 ```bash
 timestamp=$(date +'%Y-%m-%d_%H-%M-%S')
@@ -243,7 +342,7 @@ for n in 1 3; do
 done
 ```
 
-To aggregate judge results evaluate for mulitple runs you can use the following scripts:
+To aggregate judge results across multiple runs, use:
 
 ```bash
 
@@ -290,11 +389,18 @@ You can then run the statistical tests with:
 bash analysis/rq0/run_statistical_test.sh
 ```
 
-### RQ1
+</details>
+
+### Experiment B: Search Strategy Comparison
 
 #### SafeQA
 
-To replicate SafeQA experiments you can run the following command. As seeds, numbers between 1 and 6 have been used in the paper:
+This experiment compares random, combinatorial, and search-based strategies.
+
+<details>
+<summary>Show commands for Experiment B (SafeQA)</summary>
+
+To replicate SafeQA experiments, run the following commands. Seeds 1 to 6 were used in the paper:
 
 ```bash
 DATE=$(date +%d-%m-%Y)
@@ -329,11 +435,16 @@ python run_tests_safety.py \
         --features_config "configs/safety_features.json"\
         --seed 1 \
         --use_repair
-```           
+```
+</details>
+
 #### NaviQA
 
-To replicate NaviQA experiments you need to start for the [NaviQA](/naviqa/) application.
-Then you can run the following command. As seeds numbers between 1 and 6 have been used:
+<details>
+<summary>Show commands for Experiment B (NaviQA)</summary>
+
+To replicate NaviQA experiments, start the [NaviQA](/naviqa/) application first.
+Then run the following commands. Seeds 1 to 6 were used in the paper:
 
 ```bash
 DATE=$(date +%d-%m-%Y)
@@ -377,9 +488,16 @@ N_VALIDATORS=1 DEPLOYMENT_NAME="gpt-4o-mini" python run_tests_navi.py \
         --seed 1
 ```
 
-### RQ2
+</details>
 
-To replicate the metric results including the diversity analysis you can run after all search runs have been completed the following scripts. It is suggested to use wandb storage to store/retrieve the experiment results. The diversity scripts can be also applied to locally stored experiments, after minor modifications in the experiment results retrieval function.
+### Experiment C: Metrics and Diversity Analysis
+
+This experiment computes metric summaries and diversity analysis after search runs are complete.
+
+<details>
+<summary>Show commands for Experiment C</summary>
+
+To replicate metric and diversity results, run the following scripts after all search runs have completed. Using wandb as experiment storage is recommended.
 
 #### SafeQA
 
@@ -394,6 +512,10 @@ python -m analysis.rq12.get_analysis_navi
 ```
 
 You can set the oracle threshold using __th_content=0.75__ and  __th_response=0.75__ to observe how the metrics results vary when the oracle changes.
+
+</details>
+
+</details>
 
 
 ## Citation
