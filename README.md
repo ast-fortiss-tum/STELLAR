@@ -53,23 +53,7 @@ What each block does:
 ---
 ## Updates
 
-<div style="
-    background: #fde782;
-    border:1px solid #c9daf8;
-    border-left:5px solid #fde782;
-    border-radius:12px;
-    padding:14px 18px;
-    margin:18px 0;
-    color:#1f2937;
-">
-
-<strong>Latest Updates</strong>
-
-<ul style="margin-top:10px; margin-bottom:0;">
-    <li>11-05-2026 Jupyter Notebooks added</li>
-</ul>
-
-</div>
+- 2026-05-11: Added Jupyter notebooks and notebook guide.
 
 ## Overview
 
