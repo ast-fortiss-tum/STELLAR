@@ -530,6 +530,7 @@ Here is an example BibTeX entry:
   booktitle = {Proceedings of the 33rd IEEE International Conference on Software Analysis, Evolution and Reengineering},
   year      = {2026},
   publisher = {IEEE},
+  doi = {10.1109/SANER67736.2026.00093}
 }
 ```
 
