@@ -16,8 +16,8 @@
   <a href="https://github.com/opensbt/opensbt-core">
     <img src="https://img.shields.io/badge/built_on-OpenSBT-purple.svg" alt="Built on OpenSBT">
   </a>
-  <a href="https://arxiv.org/abs/2601.00497">
-    <img src="https://img.shields.io/badge/paper-2601.00497-b31b1b.svg" alt="Paper">
+  <a href="https://doi.org/10.1109/SANER67736.2026.00093">
+    <img src="https://img.shields.io/badge/DOI-10.1109%2FSANER67736.2026.00093-blue.svg" alt="DOI">
   </a>
   <a href="./jupyter/README.md">
     <img src="https://img.shields.io/badge/Jupyter-Notebooks-F37626?logo=jupyter&logoColor=white" alt="Jupyter Notebooks">
@@ -34,12 +34,26 @@ The simplified test generation pipeline of STELLAR is as follows:
 
 ```mermaid
 flowchart LR
-    A[Feature Configs\ncontent/style/perturbation] --> B[Test Input Generator\nprompting + optional RAG]
-    B --> C[SUT\nLLM app under test]
-    C --> D[Evaluators\njudge LLM + similarity metrics]
-    D --> E[Search Algorithm\nrs / gs / nsga2 / astral]
+    A[Feature Configs<br/>content/style/perturbation] --> B[Test Input Generator<br/>prompting + optional RAG]
+    B --> C[SUT<br/>LLM app under test]
+    C --> D[Evaluators<br/>judge LLM + similarity metrics]
+    D --> E[Search Algorithm<br/>rs / gs / nsga2 / astral]
     E --> B
-    D --> F[Results + Dashboard\nfailures, rates, heatmaps]
+    D --> F[Results + Dashboard<br/>failures, rates, heatmaps]
+
+    classDef config fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#000;
+    classDef generator fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#000;
+    classDef sut fill:#FFF3E0,stroke:#EF6C00,stroke-width:2px,color:#000;
+    classDef eval fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#000;
+    classDef search fill:#FCE4EC,stroke:#C2185B,stroke-width:2px,color:#000;
+    classDef results fill:#ECEFF1,stroke:#455A64,stroke-width:2px,color:#000;
+
+    class A config;
+    class B generator;
+    class C sut;
+    class D eval;
+    class E search;
+    class F results;
 ```
 What each block does:
 
