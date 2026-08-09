@@ -1,0 +1,36 @@
+{
+  "categorical_features": [
+    {
+      "name": "intent",
+      "values": ["INTENT_Climate", "INTENT_Navigation"],
+      "distribution": null
+    },
+    {
+      "name": "word_perturbation",
+      "values": ["none", "delete_words", "introduce_fillers_static", "introduce_homophones_static"],
+      "distribution": null
+    }
+  ],
+  "ordinal_features": [
+    {
+      "name": "politeness",
+      "values": ["rude", "neutral", "polite"],
+      "distribution": null
+    },
+    {
+      "name": "slang",
+      "values": ["formal", "neutral", "slangy"],
+      "distribution": null
+    },
+    {
+      "name": "implicitness",
+      "values": ["explicit", "implicit"],
+      "distribution": null
+    },
+    {
+      "name": "verbosity",
+      "values": ["short", "medium", "long"],
+      "distribution": null
+    }
+  ]
+  }

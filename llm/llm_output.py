@@ -268,88 +268,95 @@ def write_failures_over_time(res, save_folder, interval = 1200):
 
     return result
 
+def _repo_root() -> Path:
+    return Path(__file__).resolve().parents[1]
+
 def copy_prompts(save_folder, source_path = "./llm/prompts.py"):
+    if source_path == "./llm/prompts.py":
+        source_path = str(_repo_root() / "llm" / "prompts.py")
     destination_path = save_folder + "/prompts.txt"
     shutil.copy2(source_path, destination_path)
     return destination_path
 
 def copy_config(save_folder, source_path = "./llm/config.py"):
+    if source_path == "./llm/config.py":
+        source_path = str(_repo_root() / "llm" / "config.py")
     destination_path = save_folder + "/config.txt"
     shutil.copy2(source_path, destination_path)
     return destination_path
 
-def show_critical_heatmap_features(res, save_folder, max_pairs = 3):
-    problem = res.problem
-    pop = res.obtain_archive()
+# def show_critical_heatmap_features(res, save_folder, max_pairs = 3):
+#     problem = res.problem
+#     pop = res.obtain_archive()
 
-    if len(pop) > 0 and pop[0].get("X")[0].ordinal_vars is not None:
-        feature_names = problem.names_dim_utterance
-        feature_bins = get_features()
+#     if len(pop) > 0 and pop[0].get("X")[0].ordinal_vars is not None:
+#         feature_names = problem.names_dim_utterance
+#         feature_bins = get_features()
 
-        exclude_feature = "venue"
-        exclude_idx = feature_names.index(exclude_feature) if exclude_feature in feature_names else -1
+#         exclude_feature = "venue"
+#         exclude_idx = feature_names.index(exclude_feature) if exclude_feature in feature_names else -1
 
-        all_pairs = list(combinations(range(len(feature_names)), 2))
-        selected_pairs = [pair for pair in all_pairs if exclude_idx not in pair]
+#         all_pairs = list(combinations(range(len(feature_names)), 2))
+#         selected_pairs = [pair for pair in all_pairs if exclude_idx not in pair]
 
-        print(f"Writing only max {max_pairs} heatmaps from {len(selected_pairs)}")
-        selected_pairs = selected_pairs[:max_pairs]
+#         print(f"Writing only max {max_pairs} heatmaps from {len(selected_pairs)}")
+#         selected_pairs = selected_pairs[:max_pairs]
 
-        # === Extract samples ===
-        X_all = np.array([ind.get("X")[0].ordinal_vars for ind in pop])  # all tests
-        X_critical = np.array([ind.get("X")[0].ordinal_vars for ind in pop if ind.get("CB")])  # only critical
+#         # === Extract samples ===
+#         X_all = np.array([ind.get("X")[0].ordinal_vars for ind in pop])  # all tests
+#         X_critical = np.array([ind.get("X")[0].ordinal_vars for ind in pop if ind.get("CB")])  # only critical
 
-        for i, j in selected_pairs:
-            fname_i, fname_j = feature_names[i], feature_names[j]
-            bins_i = feature_bins[fname_i].categories
-            bins_j = feature_bins[fname_j].categories
-            n_bins_i, n_bins_j = len(bins_i), len(bins_j)
+#         for i, j in selected_pairs:
+#             fname_i, fname_j = feature_names[i], feature_names[j]
+#             bins_i = feature_bins[fname_i].categories
+#             bins_j = feature_bins[fname_j].categories
+#             n_bins_i, n_bins_j = len(bins_i), len(bins_j)
 
-            def bin_index(val, n_bins):
-                return min(max(int(val * n_bins), 0), n_bins - 1)
+#             def bin_index(val, n_bins):
+#                 return min(max(int(val * n_bins), 0), n_bins - 1)
 
-            # Heatmaps
-            heatmap = np.zeros((n_bins_i, n_bins_j), dtype=int)
-            count_heatmap = np.zeros((n_bins_i, n_bins_j), dtype=int)
+#             # Heatmaps
+#             heatmap = np.zeros((n_bins_i, n_bins_j), dtype=int)
+#             count_heatmap = np.zeros((n_bins_i, n_bins_j), dtype=int)
 
-            # Count critical failures
-            for row in X_critical:
-                xi = bin_index(row[i], n_bins_i)
-                yj = bin_index(row[j], n_bins_j)
-                heatmap[xi, yj] += 1
+#             # Count critical failures
+#             for row in X_critical:
+#                 xi = bin_index(row[i], n_bins_i)
+#                 yj = bin_index(row[j], n_bins_j)
+#                 heatmap[xi, yj] += 1
 
-            # Count total tests
-            for row in X_all:
-                xi = bin_index(row[i], n_bins_i)
-                yj = bin_index(row[j], n_bins_j)
-                count_heatmap[xi, yj] += 1
+#             # Count total tests
+#             for row in X_all:
+#                 xi = bin_index(row[i], n_bins_i)
+#                 yj = bin_index(row[j], n_bins_j)
+#                 count_heatmap[xi, yj] += 1
 
-            # Annotation: show total test count per cell
-            annot_labels = np.empty_like(heatmap, dtype=object)
-            for xi in range(n_bins_i):
-                for yj in range(n_bins_j):
-                    failures = heatmap[xi, yj]
-                    total = count_heatmap[xi, yj]
-                    annot_labels[xi, yj] = f"{failures}/{total}" if total > 0 else "0/0"
+#             # Annotation: show total test count per cell
+#             annot_labels = np.empty_like(heatmap, dtype=object)
+#             for xi in range(n_bins_i):
+#                 for yj in range(n_bins_j):
+#                     failures = heatmap[xi, yj]
+#                     total = count_heatmap[xi, yj]
+#                     annot_labels[xi, yj] = f"{failures}/{total}" if total > 0 else "0/0"
 
-            # === Plot heatmap ===
-            plt.figure(figsize=(max(10, len(bins_j) * 0.6), max(6, len(bins_i) * 0.4)))
-            sns.heatmap(
-                heatmap,
-                annot=annot_labels,
-                fmt="",
-                cmap="YlGnBu",
-                xticklabels=bins_j,
-                yticklabels=bins_i,
-                cbar=True
-            )
-            plt.title(f"Heatmap (Critical Failures/Number Tests)\n{fname_i} vs {fname_j}")
-            plt.xlabel(fname_j)
-            plt.ylabel(fname_i)
-            plt.xticks(rotation=45, ha="right")
-            plt.yticks(rotation=0)
-            plt.tight_layout()
+#             # === Plot heatmap ===
+#             plt.figure(figsize=(max(10, len(bins_j) * 0.6), max(6, len(bins_i) * 0.4)))
+#             sns.heatmap(
+#                 heatmap,
+#                 annot=annot_labels,
+#                 fmt="",
+#                 cmap="YlGnBu",
+#                 xticklabels=bins_j,
+#                 yticklabels=bins_i,
+#                 cbar=True
+#             )
+#             plt.title(f"Heatmap (Critical Failures/Number Tests)\n{fname_i} vs {fname_j}")
+#             plt.xlabel(fname_j)
+#             plt.ylabel(fname_i)
+#             plt.xticks(rotation=45, ha="right")
+#             plt.yticks(rotation=0)
+#             plt.tight_layout()
 
-            save_folder_heatmap = save_folder + os.sep + "htmp/"
-            Path(save_folder_heatmap).mkdir(exist_ok=True, parents=True)
-            plt.savefig(save_folder_heatmap + f"heatmap_critical_{feature_names[i]}_{feature_names[j]}.png", format="png")    
+#             save_folder_heatmap = save_folder + os.sep + "htmp/"
+#             Path(save_folder_heatmap).mkdir(exist_ok=True, parents=True)
+#             plt.savefig(save_folder_heatmap + f"heatmap_critical_{feature_names[i]}_{feature_names[j]}.png", format="png")    

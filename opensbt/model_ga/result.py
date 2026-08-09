@@ -307,6 +307,7 @@ class SimulationResult(Result):
         artifact = wandb.Artifact("results_folder", "output")
         artifact.add_dir(save_folder)
 
-        wandb.log_artifact(artifact)
+        if wandb.run is not None:
+            wandb.log_artifact(artifact)
 
         return save_folder
