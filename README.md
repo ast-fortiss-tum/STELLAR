@@ -67,7 +67,9 @@ What each block does:
 ---
 ## Updates
 
-- 2026-05-11: Added Jupyter notebooks and notebook guide.
+- 2026-05-11: Added instructions for customization -> [custom/README.md](custom/README.md)
+
+- 2026-05-11: Added Jupyter notebooks and notebook guide -> [jupyter/README.md](jupyter/README.md)
 
 ## Overview
 
