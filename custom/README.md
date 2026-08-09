@@ -6,18 +6,18 @@ This tutorial explains how to apply STELLAR to your custom testing problem. The 
 Requirements
     
  - **Operating System:** The provided scripts and notebooks have been tested on Linux, Win, and Mac.  
- - **Hardware:** No high-end GPU is required. The example runs on CPU-
+ - **Hardware:** No high-end GPU is required. The example runs on CPU.
  - **Software Environment:** Python 3.11.8 environment with Jupyter Notebook installed.
 
  </div>
 
 ## Getting Started
 
-To understand how STELLAR works, inspect following notebooks. Install first the jupyter environment in the following step.
+To understand how STELLAR works, inspect the following notebooks. First, set up the Jupyter environment using the steps below.
 
 [`01_overview.ipynb`](01_overview.ipynb): Explanation of components of the framework.
 
-[`02_customize.ipynb`](02_customize.ipynb): Customization exaplanations.
+[`02_customize.ipynb`](02_customize.ipynb): Customization explanations.
 
 ## Run the notebooks
 
@@ -54,7 +54,7 @@ jupyter notebook
 ```
 Select *Kernel > Change Kernel > venv*.
 
-Ideally: Configure LLM endpoint and ```API_KEY``` in ```.env```  to the cloud LLMs.
+Optionally, configure the LLM endpoint and ```API_KEY``` in ```.env``` for cloud LLM usage.
 
 ## How to apply the generator to your problem
 
@@ -97,7 +97,7 @@ python -m custom.main --preset test
 python -m custom.main --preset default
 ```
 
-You can always override preset configuration through flags passed.
+You can always override preset configuration by passing flags.
 ```bash
 python -m custom.main 
         --preset default 
