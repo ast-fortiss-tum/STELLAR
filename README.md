@@ -69,7 +69,7 @@ What each block does:
 
 - 2026-05-11: Added instructions for customization -> [custom/README.md](custom/README.md)
 
-- 2026-05-11: Added Jupyter notebooks and notebook guide -> [jupyter/README.md](jupyter/README.md)
+- 2026-08-09: Added Jupyter notebooks and notebook guide -> [jupyter/README.md](jupyter/README.md)
 
 ## Overview
 
