@@ -303,7 +303,8 @@ def write_simout(path, pop):
         param_values = pop.get("X")[i]
         param_v_chain = "_".join("%.2f" % a for a in param_values)
         simout_dumped = pop.get("SO")[i].to_json()
-        wandb.log(simout_dumped)
+        if wandb.run is not None:
+            wandb.log(simout_dumped)
         with open(
             path
             + os.sep
@@ -499,13 +500,15 @@ def write_summary_results(res, save_folder, params):
     summary_dict = {
         r[1][0]: r[1][1] for r in df.iterrows()
     }
-    wandb.log(summary_dict)
+    if wandb.run is not None:
+        wandb.log(summary_dict)
 
     with open(save_folder + "llm_usage_summary.json", "w") as f:
         usage_summary = ModelStatistics.complete_statistics()
         usage_summary["total"] = ModelStatistics.total_values()
         json.dump(usage_summary, f, indent=4)
-        wandb.log(usage_summary)
+        if wandb.run is not None:
+            wandb.log(usage_summary)
 
     log.info(["Number Critical Scenarios (duplicate free)", n_crit_all_dup_free])
     log.info(["Number All Scenarios (duplicate free)", n_all_dup_free])
@@ -1021,7 +1024,7 @@ def plot_single_objective_space(result, save_folder_plot, objective_names, show,
     if show:
         plt.show()
     plt.savefig(save_folder_plot + objective_names[0] + "_iterations.png")
-    plt.clf()
+    plt.close(fig)
 
 
 def optimal_individuals(res, save_folder):
@@ -1339,6 +1342,7 @@ def plot_timeseries(res, save_folder, mode="crit", type="X", max="100"):
 
 
 def write_search_config(res: Result, save_folder: str, config: SearchConfiguration):
-    with open(save_folder + "search_config.json", "w") as f:
+    with open(save_folder + os.sep + "search_config.json", "w") as f:
         f.write(config.model_dump_json(indent=4))
-        wandb.log(config.model_dump())
+        if wandb.run is not None:
+            wandb.log(config.model_dump())

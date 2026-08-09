@@ -22,8 +22,9 @@ def wandb_log_csv(filename):
             metric_table_artifact = wandb.Artifact("metric_history", type="dataset")
             metric_table_artifact.add(metric_table, "metric_table")
             metric_table_artifact.add_file(filename)
-            wandb.log({"log": metric_table})
-            wandb.log_artifact(metric_table_artifact, name=filename)
+            if wandb.run is not None:
+                wandb.log({"log": metric_table})
+                wandb.log_artifact(metric_table_artifact, name=filename)
         except io.UnsupportedOperation:
             print(f"Cannot log {filename}. Check if it is in .csv format.")
     else:
@@ -34,14 +35,15 @@ def wandb_log_csv(filename):
 def logging_callback(algorithm: Algorithm):
     all_population = algorithm.pop
     critical_all, _ = all_population.divide_critical_non_critical()
-    wandb.log(
-        {
-            "population_size": len(all_population),
-            "failures": len(critical_all),
-            "critical_ratio": len(critical_all) / len(all_population),
-            "timestamp": time.time()
-        }
-    )
+    if wandb.run is not None:
+        wandb.log(
+                {
+                    "population_size": len(all_population),
+                    "failures": len(critical_all),
+                    "critical_ratio": len(critical_all) / len(all_population),
+                    "timestamp": time.time()
+                }
+            )
 
 def logging_callback_archive(algorithm: Algorithm):
     if hasattr(algorithm, "archive") and algorithm.archive is not None:

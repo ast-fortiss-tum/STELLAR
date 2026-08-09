@@ -1,0 +1,5 @@
+{
+    "fail_rate": 0.65,
+    "num_failures": 42,
+    "num_distinct_failing_intents": 1
+}

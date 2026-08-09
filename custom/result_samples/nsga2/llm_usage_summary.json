@@ -1,0 +1,512 @@
+{
+    "mock": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-3o-mini": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-35-turbo": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-4": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-4o": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-4o-mini": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-4.1": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-5": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-5-mini": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-5-nano": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-5-chat": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "llama3.2": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "dolphin-mistral": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "deepseek-v2": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gpt-oss:20b": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "qwen": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "hf": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "mistral": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gemma": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "Mistral-7B-Instruct-v0.2-GPTQ": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "DeepSeek-R1-qcbar": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "DeepSeek-V3-0324": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "DeepSeek-V3-0324-2": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "mainzone/dolphin-2.1-mistral-7b-uncensored": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "dolphin3": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gemini-3-flash-preview": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gemini-3-pro-preview": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gemini-2.5-pro": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "gemini-2.5-flash": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "claude-35-sonnet": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "claude-37-sonnet": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "claude-4-sonnet": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "claude-3-haiku": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    },
+    "total_tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "thinking_tokens": 0,
+        "total_tokens": 0,
+        "time": 0,
+        "calls": 0,
+        "costs": {
+            "input": 0.0,
+            "output": 0.0,
+            "thinking": 0.0,
+            "total": 0.0
+        },
+        "average call time": 0
+    }
+}

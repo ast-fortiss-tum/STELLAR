@@ -1,0 +1,660 @@
+[
+    {
+        "conversation": {
+            "question": "Hey, the cabin feels cold right now, please",
+            "answer": "navigation",
+            "seed": null,
+            "ordinal_vars": [
+                0.7348174165771724,
+                0.6757958643993087,
+                0.7086524011835635,
+                0.3801289795317446
+            ],
+            "categorical_vars": [
+                0,
+                3,
+                3
+            ],
+            "content_input": {},
+            "content_output_list": [],
+            "raw_output": {
+                "intent": "navigation",
+                "probabilities": {
+                    "climate": 0.3333333333333333,
+                    "navigation": 0.6666666666666666
+                },
+                "score": 0.6666666666666666,
+                "_fitness_debug": {
+                    "expected_intent": "climate",
+                    "predicted_intent": "navigation",
+                    "probabilities": {
+                        "climate": 0.3333333333333333,
+                        "navigation": 0.6666666666666666
+                    }
+                }
+            }
+        },
+        "intents": {},
+        "features_dict": {
+            "politeness": "polite",
+            "slang": "slangy",
+            "implicitness": "implicit",
+            "verbosity": "medium"
+        },
+        "fitness": {
+            "expected_intent_probability": 0.3333333333333333
+        },
+        "is_critical": true
+    },
+    {
+        "conversation": {
+            "question": "It is too warm inn hear when you have a moment, please",
+            "answer": "navigation",
+            "seed": null,
+            "ordinal_vars": [
+                0.7549731858876031,
+                0.1233613993047021,
+                0.6050870049574197,
+                0.6888454937847049
+            ],
+            "categorical_vars": [
+                0,
+                3,
+                0
+            ],
+            "content_input": {},
+            "content_output_list": [],
+            "raw_output": {
+                "intent": "navigation",
+                "probabilities": {
+                    "climate": 0.0,
+                    "navigation": 1.0
+                },
+                "score": 1.0,
+                "_fitness_debug": {
+                    "expected_intent": "climate",
+                    "predicted_intent": "navigation",
+                    "probabilities": {
+                        "climate": 0.0,
+                        "navigation": 1.0
+                    }
+                }
+            }
+        },
+        "intents": {},
+        "features_dict": {
+            "politeness": "polite",
+            "slang": "formal",
+            "implicitness": "implicit",
+            "verbosity": "long"
+        },
+        "fitness": {
+            "expected_intent_probability": 0.0
+        },
+        "is_critical": true
+    },
+    {
+        "conversation": {
+            "question": "Hey, tuxn onkthezAC when you halve a moment",
+            "answer": "navigation",
+            "seed": null,
+            "ordinal_vars": [
+                0.39467006720915504,
+                0.8706770590149779,
+                0.2100968400005661,
+                0.9728672593258418
+            ],
+            "categorical_vars": [
+                0,
+                3,
+                1
+            ],
+            "content_input": {},
+            "content_output_list": [],
+            "raw_output": {
+                "intent": "navigation",
+                "probabilities": {
+                    "climate": 0.0,
+                    "navigation": 1.0
+                },
+                "score": 1.0,
+                "_fitness_debug": {
+                    "expected_intent": "climate",
+                    "predicted_intent": "navigation",
+                    "probabilities": {
+                        "climate": 0.0,
+                        "navigation": 1.0
+                    }
+                }
+            }
+        },
+        "intents": {},
+        "features_dict": {
+            "politeness": "neutral",
+            "slang": "slangy",
+            "implicitness": "explicit",
+            "verbosity": "long"
+        },
+        "fitness": {
+            "expected_intent_probability": 0.0
+        },
+        "is_critical": true
+    },
+    {
+        "conversation": {
+            "question": "Is too warm in here when have a moment, please",
+            "answer": "navigation",
+            "seed": null,
+            "ordinal_vars": [
+                0.7328566294757035,
+                0.4477820799248077,
+                0.9399991442817159,
+                0.887573270791754
+            ],
+            "categorical_vars": [
+                0,
+                1,
+                3
+            ],
+            "content_input": {},
+            "content_output_list": [],
+            "raw_output": {
+                "intent": "navigation",
+                "probabilities": {
+                    "climate": 0.0,
+                    "navigation": 1.0
+                },
+                "score": 1.0,
+                "_fitness_debug": {
+                    "expected_intent": "climate",
+                    "predicted_intent": "navigation",
+                    "probabilities": {
+                        "climate": 0.0,
+                        "navigation": 1.0
+                    }
+                }
+            }
+        },
+        "intents": {},
+        "features_dict": {
+            "politeness": "polite",
+            "slang": "neutral",
+            "implicitness": "implicit",
+            "verbosity": "long"
+        },
+        "fitness": {
+            "expected_intent_probability": 0.0
+        },
+        "is_critical": true
+    },
+    {
+        "conversation": {
+            "question": "Hey, thecbin feels cold righnow, please",
+            "answer": "navigation",
+            "seed": null,
+            "ordinal_vars": [
+                0.942135665876447,
+                0.6995811339401161,
+                0.8517584940763265,
+                0.5998717539120093
+            ],
+            "categorical_vars": [
+                0,
+                3,
+                2
+            ],
+            "content_input": {},
+            "content_output_list": [],
+            "raw_output": {
+                "intent": "navigation",
+                "probabilities": {
+                    "climate": 0.3333333333333333,
+                    "navigation": 0.6666666666666666
+                },
+                "score": 0.6666666666666666,
+                "_fitness_debug": {
+                    "expected_intent": "climate",
+                    "predicted_intent": "navigation",
+                    "probabilities": {
+                        "climate": 0.3333333333333333,
+                        "navigation": 0.6666666666666666
+                    }
+                }
+            }
+        },
+        "intents": {},
+        "features_dict": {
+            "politeness": "polite",
+            "slang": "slangy",
+            "implicitness": "implicit",
+            "verbosity": "medium"
+        },
+        "fitness": {
+            "expected_intent_probability": 0.3333333333333333
+        },
+        "is_critical": true
+    },
+    {
+        "conversation": {
+            "question": "Start the tan write now, please",
+            "answer": "navigation",
+            "seed": null,
+            "ordinal_vars": [
+                0.8754987195414312,
+                0.026128966618315985,
+                0.03336249881967823,
+                0.3711139742558635
+            ],
+            "categorical_vars": [
+                0,
+                3,
+                1
+            ],
+            "content_input": {},
+            "content_output_list": [],
+            "raw_output": {
+                "intent": "navigation",
+                "probabilities": {
+                    "climate": 0.0,
+                    "navigation": 1.0
+                },
+                "score": 1.0,
+                "_fitness_debug": {
+                    "expected_intent": "climate",
+                    "predicted_intent": "navigation",
+                    "probabilities": {
+                        "climate": 0.0,
+                        "navigation": 1.0
+                    }
+                }
+            }
+        },
+        "intents": {},
+        "features_dict": {
+            "politeness": "polite",
+            "slang": "formal",
+            "implicitness": "explicit",
+            "verbosity": "medium"
+        },
+        "fitness": {
+            "expected_intent_probability": 0.0
+        },
+        "is_critical": true
+    },
+    {
+        "conversation": {
+            "question": "Hey, set, lxke, thm temperapurx to 20 degrees, please",
+            "answer": "navigation",
+            "seed": null,
+            "ordinal_vars": [
+                0.9789561271030311,
+                0.9734021714352201,
+                0.043741104776795436,
+                0.10479220537135014
+            ],
+            "categorical_vars": [
+                0,
+                2,
+                1
+            ],
+            "content_input": {},
+            "content_output_list": [],
+            "raw_output": {
+                "intent": "navigation",
+                "probabilities": {
+                    "climate": 0.0,
+                    "navigation": 1.0
+                },
+                "score": 1.0,
+                "_fitness_debug": {
+                    "expected_intent": "climate",
+                    "predicted_intent": "navigation",
+                    "probabilities": {
+                        "climate": 0.0,
+                        "navigation": 1.0
+                    }
+                }
+            }
+        },
+        "intents": {},
+        "features_dict": {
+            "politeness": "polite",
+            "slang": "slangy",
+            "implicitness": "explicit",
+            "verbosity": "short"
+        },
+        "fitness": {
+            "expected_intent_probability": 0.0
+        },
+        "is_critical": true
+    },
+    {
+        "conversation": {
+            "question": "Hey, it is too warm in here when you have a moment",
+            "answer": "navigation",
+            "seed": null,
+            "ordinal_vars": [
+                0.19023861718208546,
+                0.9389450362638739,
+                0.9879945341654525,
+                0.8652026445342151
+            ],
+            "categorical_vars": [
+                0,
+                0,
+                0
+            ],
+            "content_input": {},
+            "content_output_list": [],
+            "raw_output": {
+                "intent": "navigation",
+                "probabilities": {
+                    "climate": 0.0,
+                    "navigation": 1.0
+                },
+                "score": 1.0,
+                "_fitness_debug": {
+                    "expected_intent": "climate",
+                    "predicted_intent": "navigation",
+                    "probabilities": {
+                        "climate": 0.0,
+                        "navigation": 1.0
+                    }
+                }
+            }
+        },
+        "intents": {},
+        "features_dict": {
+            "politeness": "rude",
+            "slang": "slangy",
+            "implicitness": "implicit",
+            "verbosity": "long"
+        },
+        "fitness": {
+            "expected_intent_probability": 0.0
+        },
+        "is_critical": true
+    },
+    {
+        "conversation": {
+            "question": "It is too warm in hear right now, please",
+            "answer": "navigation",
+            "seed": null,
+            "ordinal_vars": [
+                0.8794062368734444,
+                0.43182742855183237,
+                0.9726542199999748,
+                0.5940606056104685
+            ],
+            "categorical_vars": [
+                0,
+                3,
+                0
+            ],
+            "content_input": {},
+            "content_output_list": [],
+            "raw_output": {
+                "intent": "navigation",
+                "probabilities": {
+                    "climate": 0.0,
+                    "navigation": 1.0
+                },
+                "score": 1.0,
+                "_fitness_debug": {
+                    "expected_intent": "climate",
+                    "predicted_intent": "navigation",
+                    "probabilities": {
+                        "climate": 0.0,
+                        "navigation": 1.0
+                    }
+                }
+            }
+        },
+        "intents": {},
+        "features_dict": {
+            "politeness": "polite",
+            "slang": "neutral",
+            "implicitness": "implicit",
+            "verbosity": "medium"
+        },
+        "fitness": {
+            "expected_intent_probability": 0.0
+        },
+        "is_critical": true
+    },
+    {
+        "conversation": {
+            "question": "Hey, the cabin fhels cold, please",
+            "answer": "navigation",
+            "seed": null,
+            "ordinal_vars": [
+                0.8985880714239464,
+                0.8021609563256954,
+                0.5898971488464873,
+                0.057534873373264156
+            ],
+            "categorical_vars": [
+                0,
+                0,
+                1
+            ],
+            "content_input": {},
+            "content_output_list": [],
+            "raw_output": {
+                "intent": "navigation",
+                "probabilities": {
+                    "climate": 0.3333333333333333,
+                    "navigation": 0.6666666666666666
+                },
+                "score": 0.6666666666666666,
+                "_fitness_debug": {
+                    "expected_intent": "climate",
+                    "predicted_intent": "navigation",
+                    "probabilities": {
+                        "climate": 0.3333333333333333,
+                        "navigation": 0.6666666666666666
+                    }
+                }
+            }
+        },
+        "intents": {},
+        "features_dict": {
+            "politeness": "polite",
+            "slang": "slangy",
+            "implicitness": "implicit",
+            "verbosity": "short"
+        },
+        "fitness": {
+            "expected_intent_probability": 0.3333333333333333
+        },
+        "is_critical": true
+    },
+    {
+        "conversation": {
+            "question": "Hey, ct is too warmpin hear, please",
+            "answer": "navigation",
+            "seed": null,
+            "ordinal_vars": [
+                0.8153724063448098,
+                0.7596636301523235,
+                0.8412268548834076,
+                0.004589170852572266
+            ],
+            "categorical_vars": [
+                0,
+                3,
+                1
+            ],
+            "content_input": {},
+            "content_output_list": [],
+            "raw_output": {
+                "intent": "navigation",
+                "probabilities": {
+                    "climate": 0.0,
+                    "navigation": 1.0
+                },
+                "score": 1.0,
+                "_fitness_debug": {
+                    "expected_intent": "climate",
+                    "predicted_intent": "navigation",
+                    "probabilities": {
+                        "climate": 0.0,
+                        "navigation": 1.0
+                    }
+                }
+            }
+        },
+        "intents": {},
+        "features_dict": {
+            "politeness": "polite",
+            "slang": "slangy",
+            "implicitness": "implicit",
+            "verbosity": "short"
+        },
+        "fitness": {
+            "expected_intent_probability": 0.0
+        },
+        "is_critical": true
+    },
+    {
+        "conversation": {
+            "question": "Set the tmperatureto 20 you kn, degrees, please",
+            "answer": "navigation",
+            "seed": null,
+            "ordinal_vars": [
+                0.6843315142226631,
+                0.1409175538815203,
+                0.3118352054988509,
+                0.09487462700231404
+            ],
+            "categorical_vars": [
+                0,
+                2,
+                2
+            ],
+            "content_input": {},
+            "content_output_list": [],
+            "raw_output": {
+                "intent": "navigation",
+                "probabilities": {
+                    "climate": 0.0,
+                    "navigation": 1.0
+                },
+                "score": 1.0,
+                "_fitness_debug": {
+                    "expected_intent": "climate",
+                    "predicted_intent": "navigation",
+                    "probabilities": {
+                        "climate": 0.0,
+                        "navigation": 1.0
+                    }
+                }
+            }
+        },
+        "intents": {},
+        "features_dict": {
+            "politeness": "polite",
+            "slang": "formal",
+            "implicitness": "explicit",
+            "verbosity": "short"
+        },
+        "fitness": {
+            "expected_intent_probability": 0.0
+        },
+        "is_critical": true
+    },
+    {
+        "conversation": {
+            "question": "I is too warm in here ightnow, please",
+            "answer": "navigation",
+            "seed": null,
+            "ordinal_vars": [
+                0.9583008504041269,
+                0.5694869566839057,
+                0.7474215420912818,
+                0.38359479945739755
+            ],
+            "categorical_vars": [
+                0,
+                0,
+                2
+            ],
+            "content_input": {},
+            "content_output_list": [],
+            "raw_output": {
+                "intent": "navigation",
+                "probabilities": {
+                    "climate": 0.0,
+                    "navigation": 1.0
+                },
+                "score": 1.0,
+                "_fitness_debug": {
+                    "expected_intent": "climate",
+                    "predicted_intent": "navigation",
+                    "probabilities": {
+                        "climate": 0.0,
+                        "navigation": 1.0
+                    }
+                }
+            }
+        },
+        "intents": {},
+        "features_dict": {
+            "politeness": "polite",
+            "slang": "neutral",
+            "implicitness": "implicit",
+            "verbosity": "medium"
+        },
+        "fitness": {
+            "expected_intent_probability": 0.0
+        },
+        "is_critical": true
+    },
+    {
+        "conversation": {
+            "question": "Hey, tur theheating",
+            "answer": "navigation",
+            "seed": null,
+            "ordinal_vars": [
+                0.48295961223558853,
+                0.8425395907705204,
+                0.13444601110632293,
+                0.13937871124177192
+            ],
+            "categorical_vars": [
+                0,
+                1,
+                2
+            ],
+            "content_input": {},
+            "content_output_list": [],
+            "raw_output": {
+                "intent": "navigation",
+                "probabilities": {
+                    "climate": 0.0,
+                    "navigation": 1.0
+                },
+                "score": 1.0,
+                "_fitness_debug": {
+                    "expected_intent": "climate",
+                    "predicted_intent": "navigation",
+                    "probabilities": {
+                        "climate": 0.0,
+                        "navigation": 1.0
+                    }
+                }
+            }
+        },
+        "intents": {},
+        "features_dict": {
+            "politeness": "neutral",
+            "slang": "slangy",
+            "implicitness": "explicit",
+            "verbosity": "short"
+        },
+        "fitness": {
+            "expected_intent_probability": 0.0
+        },
+        "is_critical": true
+    }
+]

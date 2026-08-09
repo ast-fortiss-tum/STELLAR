@@ -57,7 +57,8 @@ class QAProblem(Problem):
 
         if feature_handler_config_path is not None:
             self.feature_handler = FeatureHandler.from_json(feature_handler_config_path)
-            wandb.log(self.feature_handler.model_dump())
+            if wandb.run is not None:
+                wandb.log(self.feature_handler.model_dump())
             
         self.seed_sampler = seed_sampler
         self.question_generator = question_generator

@@ -71,3 +71,5 @@ wandb
 *.csv
 wandb_download/
 wandb_analysis/
+
+*/.ipynb_checkpoints

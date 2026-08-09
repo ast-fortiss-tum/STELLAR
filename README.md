@@ -115,6 +115,7 @@ stellar/
 ├── analysis/            # Paper analysis scripts
 ├── configs/             # Feature config files
 ├── examples/            # Implementation of use cases Navi and Safety
+├── custom/            # Tutorial and example to apply to custom problem
 ├── judge_eval/          # Files for the judge evaluation
 ├── llm/                 # Main folder extending OpenSBT to support LLM Testing
 ├── opensbt/             # OpenSBT Base Folder
@@ -242,8 +243,9 @@ Algorithms that exist in pymoo can be also used by implementing interfaces from 
 
 ## Customization
 
-You can define your own custom problem as done for the Safety or Navigation case study. 
-We have provided interfaces and instructions as described in [CUSTOMIZATION](CUSTOMIZATION.md).
+To apply STELLAR to your custom problem follow tutorial in [custom/README.md](custom/README.md).
+
+You can customize also operators and the testing definition as described in [CUSTOMIZATION](CUSTOMIZATION.md).
 
 ## Wandb Integration
 
