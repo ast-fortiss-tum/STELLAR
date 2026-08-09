@@ -11,8 +11,8 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from llm.llms import LLMType, pass_llm
-from tarot.nlu_bot.intents import INTENTS
-from tarot.nlu_bot.ipa_nlu_bot import IPA_NLU_BOT, FALLBACK_INTENT
+from jupyter.nlu_bot.intents import INTENTS
+from jupyter.nlu_bot.ipa_nlu_bot import IPA_NLU_BOT, FALLBACK_INTENT
 
 
 def _build_system_prompt() -> str:

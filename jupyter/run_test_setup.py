@@ -26,7 +26,7 @@ from llm.eval.critical import CriticalMerged, CriticalByFitnessThreshold
 from tarot.misc.fitness import IntentMatchFitness
 from tarot.misc.nlu_utterance_generator import NLUUtteranceGenerator
 
-from tarot.nlu_bot.ipa_nlu_bot import IPA_NLU_BOT
+from jupyter.nlu_bot.ipa_nlu_bot import IPA_NLU_BOT
 from llm.llms import ALL_MODELS, LLMType
 
 import wandb

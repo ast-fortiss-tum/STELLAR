@@ -3,7 +3,7 @@ from typing import Tuple
 from opensbt.evaluation.fitness import Fitness
 from llm.model.qa_simout import QASimulationOutput
 from llm.utils.embeddings_openai import get_similarity
-from tarot.nlu_bot.intents import INTENT_SET
+from jupyter.nlu_bot.intents import INTENT_SET
 
 FALLBACK_INTENT = "INTENT_Unknown"
 

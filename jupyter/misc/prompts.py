@@ -3,7 +3,7 @@ from typing import Any, Dict
 from examples.navi.models import StyleDescription
 
 from tarot.misc.models import NLUContentInput
-from tarot.nlu_bot.intents import INTENTS, INTENT_SET
+from jupyter.nlu_bot.intents import INTENTS, INTENT_SET
 
 
 PROMPT_GENERATOR = """ You are an intelligent user request generator to test an in car assistant."""

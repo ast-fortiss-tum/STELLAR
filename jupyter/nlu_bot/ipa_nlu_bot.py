@@ -11,7 +11,7 @@ from llm.model.qa_simout import QASimulationOutput
 from llm.model.models import Utterance
 from llm.llms import pass_llm, LLMType
 from llm.config import LLM_IPA
-from tarot.nlu_bot.intents import INTENTS, INTENT_SET
+from jupyter.nlu_bot.intents import INTENTS, INTENT_SET
 
 FALLBACK_INTENT = "INTENT_Unknown"
 
