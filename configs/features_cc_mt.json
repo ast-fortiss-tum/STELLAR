@@ -1,0 +1,242 @@
+{
+    "categorical_features": [
+        {
+            "name": "word_perturbation",
+            "values": [
+            null,
+            "delete_words", 
+            "introduce_fillers_llm"
+            ],
+            "distribution": null
+        },
+        {
+            "name": "system",
+            "values": [
+                "windows",
+                "fog_lights",
+                "ambient_lights",
+                "head_lights",
+                "climate",
+                "fan",
+                "seat_heating"
+            ],
+            "distribution": null
+        },
+        {
+        "name": "position",
+        "values": [null, "driver", "passenger", "back_left", "back_right"],
+        "distribution": null
+        },
+        {
+        "name": "seat_position",
+        "values": [null, "driver", "front_passenger", "back_left", "back_center", "back_right"],
+        "distribution": null
+        },
+        {
+        "name": "fog_light_position",
+        "values": [null, "front", "rear"],
+        "distribution": null
+        },
+        {
+        "name": "window_state_target",
+        "values": ["open", "close"],
+        "distribution": null
+        },
+        {
+        "name": "window_state_initial",
+        "values": ["open", "close"],
+        "distribution": null
+        },
+        {
+        "name": "onoff_state_target",
+        "values": ["on", "off"],
+        "distribution": null
+        },
+        {
+        "name": "onoff_state_initial",
+        "values": ["on", "off"],
+        "distribution": null
+        },
+        {
+        "name": "head_lights_mode_target",
+        "values": [null, "off", "parking", "low_beam", "high_beam", "auto"],
+        "distribution": null
+        },
+        {
+        "name": "head_lights_mode_initial",
+        "values": ["off", "parking", "low_beam", "high_beam", "auto"],
+        "distribution": null
+        },
+        {
+          "name": "climate_temperature_value_target",
+          "values": [null, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+          "distribution": null
+        },
+        {
+        "name": "climate_temperature_value_initial",
+        "values": [null, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+        "distribution": null
+        },
+        {
+        "name": "seat_heating_level_target",
+        "values": [null, 0, 1, 2, 3],
+        "distribution": null
+        },
+        {
+        "name": "seat_heating_level_initial",
+        "values": [0, 1, 2, 3],
+        "distribution": null
+        },
+        {
+          "name": "system2",
+          "values": [
+              null,
+              "windows",
+              "fog_lights",
+              "ambient_lights",
+              "head_lights",
+              "reading_lights",
+              "climate",
+              "fan",
+              "seat_heating"
+          ],
+          "distribution": null
+      },
+      {
+      "name": "position2",
+      "values": [null, "driver", "passenger", "back_left", "back_right"],
+      "distribution": null
+      },
+      {
+      "name": "seat_position2",
+      "values": [null, "driver", "front_passenger", "back_left", "back_center", "back_right"],
+      "distribution": null
+      },
+      {
+      "name": "fog_light_position2",
+      "values": [null, "front", "rear"],
+      "distribution": null
+      },
+      {
+      "name": "window_state_target2",
+      "values": ["open", "close"],
+      "distribution": null
+      },
+      {
+      "name": "window_state_initial2",
+      "values": ["open", "close"],
+      "distribution": null
+      },
+      {
+      "name": "onoff_state_target2",
+      "values": ["on", "off"],
+      "distribution": null
+      },
+      {
+      "name": "onoff_state_initial2",
+      "values": ["on", "off"],
+      "distribution": null
+      },
+      {
+      "name": "head_lights_mode_target2",
+      "values": [null, "off", "parking", "low_beam", "high_beam", "auto"],
+      "distribution": null
+      },
+      {
+      "name": "head_lights_mode_initial2",
+      "values": ["off", "parking", "low_beam", "high_beam", "auto"],
+      "distribution": null
+      },
+      {
+      "name": "climate_temperature_value_target2",
+      "values": [null, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+      "distribution": null
+      },
+      {
+      "name": "climate_temperature_value_initial2",
+      "values": [null, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+      "distribution": null
+      },
+      {
+      "name": "seat_heating_level_target2",
+      "values": [null, 0, 1, 2, 3],
+      "distribution": null
+      },
+      {
+      "name": "seat_heating_level_initial2",
+      "values": [0, 1, 2, 3],
+      "distribution": null
+      }
+    ],
+    "ordinal_features": [
+        {
+          "name": "politeness",
+          "values": ["unpleasant", "neutral", "polite"],
+          "distribution": null
+        },
+        {
+          "name": "anthropomorphism",
+          "values": ["very directive", "directive", "interrogative", "empathic"],
+          "distribution": null
+        },
+        {
+          "name": "slang",
+          "values": ["formal", "neutral", "slangy"],
+          "distribution": null
+        },
+        {
+          "name": "implicitness",
+          "values": ["not implicit", "slightly implicit", "implicit"],
+          "distribution": null
+        }
+    ],
+    "continuous_features": [
+      {
+        "name": "choice",
+        "lb": 0.001,
+        "ub": 1.0
+      },
+      {
+        "name": "add_preferences",
+        "lb": 0.001,
+        "ub": 1.0
+      },
+      {
+        "name": "ask",
+        "lb": 0.001,
+        "ub": 1.0
+      },
+      {
+        "name": "change_of_mind",
+        "lb": 0.001,
+        "ub": 1.0
+      },
+      {
+        "name": "confirmation",
+        "lb": 0.001,
+        "ub": 1.0
+      },
+      {
+        "name": "reject",
+        "lb": 0.001,
+        "ub": 0.3
+      },
+      {
+        "name": "reject_clarify",
+        "lb": 0.001,
+        "ub": 0.5
+      },
+      {
+        "name": "repeat",
+        "lb": 0.001,
+        "ub": 0.5
+      },
+      {
+        "name": "stop",
+        "lb": 0.001,
+        "ub": 0.1
+      }
+    ]
+
+}
+  

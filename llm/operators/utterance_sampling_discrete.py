@@ -1,4 +1,4 @@
-from typing import List, Tuple, Optional
+from typing import Callable, List, Tuple, Optional
 import random
 import multiprocessing
 import signal
@@ -12,6 +12,7 @@ from llm.features.models import DiscreteFeature
 from llm.model.qa_problem import QAProblem
 from llm.config import LLM_SAMPLING
 from llm.features.models import DiscreteFeature
+from llm.eval.utterances_distance import get_feature_distance
 from .base_classes import UtteranceSamplingBase
 
 
@@ -123,42 +124,102 @@ class UtteranceSamplingGrid(UtteranceSamplingBase):
         print(f"For {n_samples} generated a covering of size {len(result)} with t={t}")
         random.shuffle(result)
         return result
-    
+
     def sample_covering(self, problem: QAProblem, n_samples: int, **kwargs):
-        # Gather categorical and ordinal features
         categorical_features = list(problem.feature_handler.categorical_features.values())
         ordinal_features = list(problem.feature_handler.ordinal_features.values())
-        features = categorical_features + ordinal_features
+        self.covering_variables = self._get_covering(
+            n_samples, categorical_features + ordinal_features
+        )
 
-        # Get covering variables
-        self.covering_variables = self._get_covering(n_samples, features)
-
-    def _sample_instances(self, problem: QAProblem, n_samples: int, **kwargs) -> List[str]:
-        # Gather categorical and ordinal features
+    def _sample_instances(
+        self, problem: QAProblem, n_samples: int, **kwargs
+    ) -> List[Utterance]:
         categorical_features = list(problem.feature_handler.categorical_features.values())
         ordinal_features = list(problem.feature_handler.ordinal_features.values())
-
         result = []
-        for i in range(n_samples):
-            if len(self.covering_variables) == 0:
-                to_sample = self.total_samples or n_samples - i
-                self.sample_covering(problem, to_sample)
+        for index in range(n_samples):
+            if not self.covering_variables:
+                self.sample_covering(problem, self.total_samples or n_samples - index)
             covering_variable = self.covering_variables.pop()
-
-            # Split into categorical and ordinal variables
             categorical_vars = covering_variable[:len(categorical_features)]
             ordinal_vars = covering_variable[len(categorical_features):]
-
-            # Normalize ordinal variables
-            ordinal_vars = [(value + 0.5) / feature.num_values for value, feature in zip(ordinal_vars, ordinal_features)]
-
-            # Generate utterance
-            utterance = problem.question_generator.generate_utterance(
-                seed=None,
-                ordinal_vars=ordinal_vars,
-                categorical_vars=categorical_vars,
-                llm_type=self.llm_type
+            ordinal_vars = [
+                (value + 0.5) / feature.num_values
+                for value, feature in zip(ordinal_vars, ordinal_features)
+            ]
+            result.append(
+                problem.question_generator.generate_utterance(
+                    seed=None,
+                    ordinal_vars=ordinal_vars,
+                    categorical_vars=categorical_vars,
+                    llm_type=self.llm_type,
+                )
             )
-            result.append(utterance)
-
         return result
+
+
+class UtteranceSamplingDiscreteDiverse(UtteranceSamplingBase):
+    def __init__(
+        self,
+        variable_length=False,
+        llm_type=LLMType(LLM_SAMPLING),
+        generate_question: bool = True,
+        samples_per_step: int = 10,
+        dist_fnc: Callable = get_feature_distance,
+    ):
+        super().__init__()
+        self.variable_length = variable_length
+        self.llm_type = llm_type
+        self.generate_question = generate_question
+        self.samples_per_step = samples_per_step
+        self.dist_fnc = dist_fnc
+        self.archive = []
+
+    def _sample_instance(
+        self, problem: QAProblem, seed: Optional[str] = None, **kwargs
+    ) -> Utterance:
+        vars_list = [
+            problem.feature_handler.sample_feature_scores()
+            for _ in range(self.samples_per_step)
+        ]
+        best_vars = vars_list[0]
+        max_distance = -1
+        for vars_candidate in vars_list:
+            candidate_utterance = Utterance(
+                question="",
+                answer="",
+                ordinal_vars=vars_candidate.ordinal,
+                categorical_vars=vars_candidate.categorical,
+            )
+            distances = [
+                self.dist_fnc(candidate_utterance, archived)
+                for archived in self.archive
+            ]
+            average_distance = np.mean(distances) if distances else 0
+            if average_distance > max_distance:
+                max_distance = average_distance
+                best_vars = vars_candidate
+
+        sampled = self._build_utterance(
+            problem=problem,
+            seed=seed,
+            ordinal_vars=best_vars.ordinal,
+            categorical_vars=best_vars.categorical,
+        )
+        self.archive.append(sampled)
+        return sampled
+
+    def _sample_instances(
+        self, problem: QAProblem, n_samples: int, **kwargs
+    ) -> List[Utterance]:
+        if problem.seed_sampler is not None:
+            seeds = problem.seed_sampler.sample_seeds(n_samples)
+            print("seeds:", seeds)
+        else:
+            seeds = [None] * n_samples
+
+        return [
+            self._sample_instance(problem, seeds[index], **kwargs)
+            for index in range(n_samples)
+        ]

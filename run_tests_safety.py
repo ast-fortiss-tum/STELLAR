@@ -22,6 +22,7 @@ from llm.operators.utterance_repair import (
 )
 from llm.operators.utterance_sampling_discrete import (
     UtteranceSamplingDiscrete,
+    UtteranceSamplingDiscreteDiverse,
     UtteranceSamplingGrid,
 )
 from llm.sut.io_simulation import IOSimulator
@@ -59,7 +60,7 @@ def parse_args():
     parser.add_argument(
         "--algorithm",
         type=str,
-        choices=["rs", "gs", "nsga2", "nsga2d"],
+        choices=["rs", "gs", "nsga2", "nsga2d", "nsga2ds"],
         default="nsga2",
         help="Algorithm.",
     )
@@ -103,6 +104,11 @@ def parse_args():
         help="Use the repair operator instead of generating utterances during crossover and mutation",
     )
     parser.add_argument(
+        "--use_diverse_sampling",
+        action="store_true",
+        help="Use diverse feature sampling with NSGA-II-D",
+    )
+    parser.add_argument(
         "--features_config",
         type=str,
         default="configs/safety_features.json",
@@ -142,8 +148,17 @@ if __name__ == "__main__":
                 llm_type=llm_generator, total_samples=args.population_size
             )
             if args.algorithm == "gs"
-            else UtteranceSamplingDiscrete(llm_type=llm_generator,
-                generate_question=not args.use_repair)
+            else (
+                UtteranceSamplingDiscreteDiverse(
+                    llm_type=llm_generator,
+                    generate_question=not args.use_repair,
+                )
+                if args.use_diverse_sampling or args.algorithm == "nsga2ds"
+                else UtteranceSamplingDiscrete(
+                    llm_type=llm_generator,
+                    generate_question=not args.use_repair,
+                )
+            )
         ),
         mutation=UtteranceMutationDiscrete(
             llm_type=llm_generator, generate_question=not args.use_repair
@@ -227,6 +242,7 @@ if __name__ == "__main__":
         "gs": PureSampling,
         "nsga2": NsgaIIOptimizer,
         "nsga2d": NSGAIIDOptimizer,
+        "nsga2ds": NSGAIIDOptimizer,
     }
     if args.algorithm not in optimizer_map:
         raise ValueError("Algorithm not supported")

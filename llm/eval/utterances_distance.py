@@ -1,4 +1,4 @@
-from typing import ClassVar, Dict, Tuple
+from typing import Callable, ClassVar, Dict, Tuple
 
 import numpy as np
 from pydantic import BaseModel
@@ -106,3 +106,32 @@ class UtterancesDistance(BaseModel):
             categorical_vars_distance=categorical_vars_distance,
             vars_distance=total_distance,
         )
+
+
+def get_question_distance(a, b, bounds=None) -> float:
+    utterance_a: Utterance = a.get("X")[0]
+    utterance_b: Utterance = b.get("X")[0]
+    question_distance = UtterancesDistance.calculate(
+        utterance_a, utterance_b
+    ).embeddings_distance
+    if bounds is not None:
+        lower_bound, upper_bound = bounds[1], bounds[0]
+        question_distance = question_distance * (upper_bound - lower_bound) + lower_bound
+    if not isinstance(question_distance, (float, int)):
+        question_distance = question_distance[0]
+    return question_distance
+
+
+def get_feature_distance(a: Utterance, b: Utterance, bounds=None) -> float:
+    return UtterancesDistance.calculate(a, b).vars_distance
+
+
+def create_feature_distance_function_from_constrains(
+    constrains: Callable[[Utterance], Utterance],
+) -> Callable:
+    def feature_distance_function(a: Utterance, b: Utterance, bounds=None) -> float:
+        return UtterancesDistance.calculate(
+            constrains(a), constrains(b)
+        ).vars_distance
+
+    return feature_distance_function

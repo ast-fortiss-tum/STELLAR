@@ -3,7 +3,7 @@
 import os
 import time
 import traceback
-from openai import AzureOpenAI, BadRequestError
+from openai import BadRequestError, OpenAI
 from llm.model_registry import MODEL_REGISTRY
 from llm.llms import LLMType, GPT5_MODELS
 
@@ -23,22 +23,13 @@ class OpenAIClient:
 
         self.model_config = MODEL_REGISTRY[self.model_name]
 
-        self.api_version = self.model_config["api_version"]
-        self.azure_endpoint = self.model_config["azure_endpoint"]
         self.deployment_name = self.model_config["deployment_name"]
 
-        # Use passed api_key or fallback to environment variable
-        self.api_key = api_key or os.getenv(
-            f"{self.model_name.upper().replace('-', '_').replace('.', '_')}_API_KEY"
-        )
+        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         if not self.api_key:
             raise EnvironmentError(f"API key for model '{self.model_name}' not provided or set in environment")
-    
-        self.client = AzureOpenAI(
-            api_key=self.api_key,
-            api_version=self.api_version,
-            azure_endpoint=self.azure_endpoint
-        )
+
+        self.client = OpenAI(api_key=self.api_key)
 
         self.token_usage = 0
         self.call_counter = 0

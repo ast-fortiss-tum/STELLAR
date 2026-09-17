@@ -88,7 +88,7 @@ STELLAR helps to answer:
 - ✅ Stylistic variation (e.g., implicitness, slang, politeness, anthropomorphism)
 - ✅ Perturbation simulations (e.g., fillers, word deletions, homophones, typos)
 - ✅ Content variation based on domain/category definitions
-- ✅ Four generation algorithms (`rs`, `nsga2`, `gs`, `astral`)
+- ✅ Search algorithms including `rs`, `nsga2`, `nsga2d`, `nsga2ds`, and `gs`
 - ✅ Automated result collection and reproducible experiment outputs
 - ✅ Interactive dashboard for result exploration and failure analysis
 - ✅ Weight and Biases Integration for experiment tracking
@@ -130,7 +130,7 @@ stellar/
 │
 ├── analysis/            # Paper analysis scripts
 ├── configs/             # Feature config files
-├── examples/            # Implementation of use cases Navi and Safety
+├── examples/            # Implementation of Navi, Safety, and Car Controls use cases
 ├── custom/            # Tutorial and example to apply to custom problem
 ├── judge_eval/          # Files for the judge evaluation
 ├── llm/                 # Main folder extending OpenSBT to support LLM Testing
@@ -138,6 +138,7 @@ stellar/
 ├── .env-example         # Example .env file to use cloud LLMs
 ├── README.md            # Project overview
 ├── requirements.txt     # Dependencies
+├── main.py              # Unified Navi, Safety, and Car Controls runner
 ├── run_tests_navi.py    # Run navi case study
 └── run_tests_safety.py  # Run safety case study
 ```
@@ -152,7 +153,7 @@ You can install dependencies via:
 pip install -r requirements.txt
 ```
 
-STELLAR can be used with local LLMs just as Llama3.2 or Mistral from [Ollama](https://ollama.com), as well as with LLMs deployed in the cloud (OpenAI). Configure the OpenAI endpoint and key via [.env](./.env).  
+STELLAR can be used with local LLMs just as Llama3.2 or Mistral from [Ollama](https://ollama.com), as well as with OpenAI-hosted models. Configure `OPENAI_API_KEY` via [.env](./.env).  
 
 When using local models, make sure that they have been downloaded via Ollama locally. Make sure hardware requirements are satisfied.
 
@@ -229,6 +230,50 @@ python run_tests_safety.py \
         --features_config "configs/safety_features.json"\
         --seed 1
 ```        
+
+### Car Controls
+
+Car Controls supports single-turn tests against the Yelp-backed SUT. Run the all-algorithm smoke test from the repository root:
+
+```bash
+bash scripts/test_single_turn_car_control_algorithms.sh
+```
+
+The Navi and Safety equivalents are `scripts/test_single_turn_navi_algorithms.sh` and `scripts/test_single_turn_safety_algorithms.sh`. Each runs `rs`, `gs`, `nsga2`, `nsga2d`, and `nsga2ds` under its own W&B project. Set `WANDB_ENTITY` to override the default entity.
+
+## Arguments
+
+The unified [`main.py`](main.py) runner accepts these arguments. Case-study defaults are applied when optional values are omitted.
+
+| Argument | Description |
+|---|---|
+| `--case_study` | Use case to run: `cc`, `navi`, or `safety`. |
+| `--mode` | Test mode: `single-turn` or `multi-turn`. |
+| `--algorithm` | Search strategy: `rs`, `gs`, `nsga2`, `nsga2d`, or `nsga2ds`; `gs` is available for every single-turn case study. |
+| `--n`, `--i` | Population size and number of generations. |
+| `--seed` | Random seed for repeatable searches. |
+| `--max_time` | Optional search time limit in `hh:mm:ss` format. |
+| `--features_config` | Feature configuration JSON path. |
+| `--sut` | System under test; valid values depend on the selected case study and mode. |
+| `--llm_ipa`, `--llm_judge`, `--llm_generator` | Models for the SUT, judge, and input generator. |
+| `--llm_intent_classifier` | Model for multi-turn intent classification. |
+| `--th_answer`, `--th_content`, `--th_dims` | Failure thresholds for single-turn and multi-turn evaluators. |
+| `--archive_threshold` | Novelty archive threshold used by `nsga2d` and `nsga2ds`. |
+| `--use_repair` | Regenerate questions or conversations through the repair operator. |
+| `--use_rag` | Enable retrieval-augmented input generation where supported. |
+| `--use_diverse_sampling` | Use diverse initial sampling; `nsga2ds` enables it automatically for single-turn tests. |
+| `--use_wandb` | Enable Weights & Biases logging. |
+| `--wandb_project` | W&B project; defaults depend on the case study and mode. |
+| `--wandb_entity` | W&B entity or team; defaults to `opentest`. |
+| `--save_folder` | Directory in which search results are written. |
+| `--store_turns_details` | Write per-turn outputs for multi-turn runs. |
+
+### Diversity Algorithms
+
+`nsga2d` runs NSGA-II with a novelty archive. Alongside the ordinary fitness objectives, it maximizes distance from archived test cases so the search retains behaviorally distinct inputs.
+
+`nsga2ds` is an alias for `nsga2d` with diverse sampling enabled. For each initial test case, STELLAR draws several feature candidates and selects the one with the largest average feature distance from the samples already generated. It changes initialization only; subsequent evolution continues with the same NSGA-II-D archive and operators.
+
 ## Search Configuration
 
 STELLAR distinguishes between style, content, and perturbation features for test generation.
@@ -251,7 +296,8 @@ If you are unsure where to start:
 | Fast baseline / smoke test | Random Search | `rs` | Simple and quick; good first reference point |
 | Best failure discovery under fixed budget | NSGA-II | `nsga2` | Reuses feedback to focus on promising test cases |
 | Broad feature-interaction coverage | T-wise | `gs` | Targets combinatorial interactions systematically |
-| Safety-focused systematic exploration | ASTRAL | `astral` | Designed for full-coverage safety workflows |
+| Diversity-oriented failure discovery | NSGA-II-D | `nsga2d` | Retains inputs that are novel relative to the archive |
+| Diverse-initialized NSGA-II-D | NSGA-II-DS | `nsga2ds` | `nsga2d` with diverse feature sampling for single-turn tests |
 
 Recommended first path: start with **Random Search** (`rs`) for a baseline, then switch to **NSGA-II** (`nsga2`) for deeper failure discovery.
 
@@ -265,15 +311,13 @@ You can customize also operators and the testing definition as described in [CUS
 
 ## Wandb Integration
 
-STELLAR integrates wandb for experiment progress monitoring and results tracking.
-Enable or disable wandb via the --wandb flag.
-Before logging, create a wandb project, log in with the CLI, and set the project name in the main application file. Result artifacts are uploaded to the corresponding run and can be downloaded for later analysis.
+STELLAR integrates W&B for experiment progress monitoring and results tracking. Enable it with `--use_wandb`; select a destination with `--wandb_project <project>` and `--wandb_entity <entity>`. Result artifacts are uploaded to the corresponding run and can be downloaded for later analysis.
 
 ```python
-weave.init("dev")
+weave.init(args.wandb_project)
 wandb.init(
-        entity="<your wandb group>",                  # team
-        project="<your project name>",                  # the project name
+  entity=args.wandb_entity,
+  project=args.wandb_project,
         name=problem_name,                  # run name
         group=datetime.now().strftime("%d-%m-%Y"),  # group by date
         tags=tags,

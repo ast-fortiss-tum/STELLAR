@@ -19,7 +19,10 @@ from llm.eval.fitness import FitnessMerged, FitnessDiverse, FitnessNumberOfWords
 from examples.navi.fitness import NaviFitnessAnswerValidationDimensions, NaviFitnessContentComparison
 from llm.eval.critical import CriticalMerged, CriticalByFitnessThreshold, CriticalAnswerLength
 from llm.operators.utterance_crossover_discrete import UtteranceCrossoverDiscrete
-from llm.operators.utterance_sampling_discrete import UtteranceSamplingDiscrete
+from llm.operators.utterance_sampling_discrete import (
+    UtteranceSamplingDiscrete,
+    UtteranceSamplingDiscreteDiverse,
+)
 from llm.operators.utterance_mutator_discrete import UtteranceMutationDiscrete
 from llm.operators.utterance_duplicates_discrete import UtteranceDuplicateEliminationDiscreteWithContent, UtteranceDuplicateEliminationLocalDiscreteWithContent
 from opensbt.utils.log_utils import log, setup_logging, disable_pymoo_warnings
@@ -83,7 +86,7 @@ def parse_args():
         help="Threshold content."
     )
     parser.add_argument("--algorithm", type=str, 
-        choices=["rs", "nsga2", "nsga2d"], 
+        choices=["rs", "nsga2", "nsga2d", "nsga2ds"], 
         default="nsga2d",
         help="Algorithm."
     )
@@ -102,6 +105,11 @@ def parse_args():
         "--use_rag",
         action="store_true",
         help="Turn off rag in test generation"
+    )
+    parser.add_argument(
+        "--use_diverse_sampling",
+        action="store_true",
+        help="Use diverse feature sampling with NSGA-II-D",
     )
     parser.add_argument(
         "--judge",
@@ -142,7 +150,11 @@ SUT_CLASS = SUT_MAP[args.sut]
 
 search_operatoes = QASearchOperators(
     crossover=UtteranceCrossoverDiscrete(),
-    sampling=UtteranceSamplingDiscrete(),
+    sampling=(
+        UtteranceSamplingDiscreteDiverse()
+        if args.use_diverse_sampling or args.algorithm == "nsga2ds"
+        else UtteranceSamplingDiscrete()
+    ),
     mutation=UtteranceMutationDiscrete(),
     duplicate_elimination=UtteranceDuplicateEliminationLocalDiscreteWithContent(),
 )
@@ -243,7 +255,7 @@ if args.algorithm == "nsga2":
                         config=config,
                         callback=logging_callback_archive)
     
-elif args.algorithm == "nsga2d":
+elif args.algorithm in {"nsga2d", "nsga2ds"}:
     optimizer = NSGAIIDOptimizer(
                             problem=problem,
                             config=config,

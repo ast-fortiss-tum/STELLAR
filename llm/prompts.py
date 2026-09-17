@@ -164,6 +164,60 @@ SAMPLING_PROMPT = """
           Output:
           """
 
+CLASSIFY_SYSTEM_INTENT_PROMPT = """Analyze the system's response and determine its intent.
+
+                                 System response: "{system_answer}"
+
+                                 # Available system intents: {possible_intents}
+
+                                 Note that "inform" and "inform_and_followup", and "choice" and "choice_and_followup" are different pairs of intents.
+                                 Pay special attention to the presence of a follow-up question or proposal for an action, which distinguishes these pairs.
+
+                                 # Intent definitions:
+                                 - inform: System provides information related to the user's query and contains no follow-up question or action proposal
+                                 - inform_and_followup: System provides information related to the user's query and contains a follow-up question or action proposal
+                                 - confirmation: System confirms or agrees and starts the required action without a follow-up question
+                                 - confirmation_and_followup: System confirms or agrees and starts the required action with a follow-up question
+                                 - clarify: System asks for clarification with a single question
+                                 - choice: System offers at least two specific options without a question
+                                 - choice_and_followup: System offers at least two specific options and asks a follow-up question
+                                 - failure: System indicates that something went wrong
+                                 - reject: System cannot fulfill the request and has no follow-up question or action proposal
+                                 - reject_and_followup: System cannot fulfill the request and has a follow-up question or action proposal
+                                 - misc: System's response does not fit another category
+
+                                 Now respond with ONLY the intent name:
+                                 """
+
+CONVERSATION_FOLLOW_UP_PROMPTS_CAR_CONTROL = {
+    intent: """You are a user continuing a car-control conversation.
+
+Generate one concise user utterance that follows the requested intent and conversation context.
+
+Content-related requirements:
+{content_requirements}
+
+Style requirements:
+{style_prompt}
+
+Conversation history:
+{history}
+
+Now produce ONLY the user utterance and nothing else:
+"""
+    for intent in (
+        "choice",
+        "add_preferences",
+        "change_of_mind",
+        "ask",
+        "stop",
+        "reject",
+        "reject_clarify",
+        "repeat",
+        "confirmation",
+    )
+}
+
 SYSTEM_PROMPT = """
                 You are an in-car AI assistant with access to information regarding venues like restaurants, coffee shops, churches, shopping malls, supermarkets, hospitals, doctors, parks, sights, streets, parkings, hotels, resting places, etc.
                 You can also control car functions, like opening or closing windows, control temperature, control lights, control music, control engine.

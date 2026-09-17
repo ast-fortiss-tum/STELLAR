@@ -1,6 +1,6 @@
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional, Set
 import random
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from dataclasses import dataclass, field
 
 @dataclass
@@ -67,6 +67,37 @@ class Utterance(BaseModel):
     content_input: Optional[ContentInput] = None
     content_output_list: List[ContentOutput] = field(default_factory=list)
     raw_output: Any = None
+
+
+class Turn(Utterance):
+    question_intent: Optional[str] = None
+    answer_intent_classified: Optional[str] = None
+    poi_exists: Optional[bool] = None
+    user_intent_influences_fit: Optional[bool] = None
+
+
+class Conversation(BaseModel):
+    _assigned_user_id: Optional[str] = None
+
+    turns: List[Turn] = Field(default_factory=list)
+    seed: Optional[str] = None
+    ordinal_vars: List[float] = Field(default_factory=list)
+    categorical_vars: List[int] = Field(default_factory=list)
+    continuous_vars: List[float] = Field(default_factory=list)
+    style_input: Optional[Any] = None
+    content_input_values: Dict[str, Any] = Field(default_factory=dict)
+    content_input_used: Set[str] = Field(default_factory=set)
+
+    def __len__(self) -> int:
+        return len(self.turns)
+
+    @property
+    def assigned_user_id(self) -> Optional[str]:
+        return self._assigned_user_id
+
+    @assigned_user_id.setter
+    def assigned_user_id(self, value: str) -> None:
+        self._assigned_user_id = value
 
     
 if __name__ == "__main__":

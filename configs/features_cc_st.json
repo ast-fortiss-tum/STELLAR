@@ -1,0 +1,216 @@
+{
+  "categorical_features": [
+    {
+      "name": "word_perturbation",
+      "values": [
+        null,
+        "delete_words", 
+        "introduce_homophones_static", 
+        "introduce_fillers_llm"
+      ],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_window_front_left",
+      "values": ["open", "closed"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_window_front_right",
+      "values": ["open", "closed"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_window_rear_left",
+      "values": ["open", "closed"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_window_rear_right",
+      "values": ["open", "closed"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_fog_light",
+      "values": ["off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_head_light",
+      "values": ["off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_ambient_light",
+      "values": ["off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_reading_light_front_left",
+      "values": ["off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_reading_light_front_right",
+      "values": ["off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_reading_light_rear_left",
+      "values": ["off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_reading_light_rear_right",
+      "values": ["off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_climate",
+      "values": ["off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_fan",
+      "values": ["off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_seat_heating_front_left",
+      "values": ["off", "low", "medium", "high"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_seat_heating_front_right",
+      "values": ["off", "low", "medium", "high"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_seat_heating_rear_left",
+      "values": [null],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_seat_heating_rear_right",
+      "values": [null],
+      "distribution": null
+    },
+    {
+      "name": "target_state_window_front_left",
+      "values": [null, "open", "closed"],
+      "distribution": null
+    },
+    {
+      "name": "target_state_window_front_right",
+      "values": [null, "open", "closed"],
+      "distribution": null
+    },
+    {
+      "name": "target_state_window_rear_left",
+      "values": [null, "open", "closed"],
+      "distribution": null
+    },
+    {
+      "name": "target_state_window_rear_right",
+      "values": [null, "open", "closed"],
+      "distribution": null
+    },
+    {
+      "name": "target_state_fog_light",
+      "values": [null, "off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "target_state_head_light",
+      "values": [null, "off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "target_state_ambient_light",
+      "values": [null, "off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "target_state_reading_light_front_left",
+      "values": [null, "off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "target_state_reading_light_front_right",
+      "values": [null, "off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "target_state_reading_light_rear_left",
+      "values": [null, "off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "target_state_reading_light_rear_right",
+      "values": [null, "off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "target_state_climate",
+      "values": [null, "off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "target_state_fan",
+      "values": [null, "off", "on"],
+      "distribution": null
+    },
+    {
+      "name": "target_state_seat_heating_front_left",
+      "values": [null, "off", "low", "medium", "high"],
+      "distribution": null
+    },
+    {
+      "name": "target_state_seat_heating_front_right",
+      "values": [null, "off", "low", "medium", "high"],
+      "distribution": null
+    },
+    {
+      "name": "target_state_seat_heating_rear_left",
+      "values": [null],
+      "distribution": null
+    },
+    {
+      "name": "target_state_seat_heating_rear_right",
+      "values": [null],
+      "distribution": null
+    }
+  ],
+  "ordinal_features": [
+    {
+      "name": "politeness",
+      "values": ["very rude", "rude", "neutral", "polite", "very polite"],
+      "distribution": null
+    },
+    {
+      "name": "anthropomorphism",
+      "values": ["very directive", "directive", "interrogative", "empathic"],
+      "distribution": null
+    },
+    {
+      "name": "misspelling_words",
+      "values": ["0 per cent", "20 per cent", "40 per cent", "60 per cent", "80 per cent", "100 per cent"],
+      "distribution": null
+    },
+    {
+      "name": "wrong_declination_of_verbs",
+      "values": ["0 per cent", "20 per cent", "40 per cent", "60 per cent", "80 per cent", "100 per cent"],
+      "distribution": null
+    },
+    {
+      "name": "initial_state_temperature",
+      "values": [16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0, 27.0, 28.0],
+      "distribution": null
+    },
+    {
+      "name": "target_state_temperature",
+      "values": [null, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0, 27.0, 28.0],
+      "distribution": null
+    }
+  ]
+}
