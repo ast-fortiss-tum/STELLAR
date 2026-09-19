@@ -255,7 +255,7 @@ If you are unsure where to start:
 | Best if both coverage and failure detection is relevant | NSGA-II-D | `nsga2d` | Optimizes test case diversity to increase failure coverage. |
 | Best if diversity across failures is relevant | NSGA-II-DS | `nsga2ds` | Optimizes diversity of failures but stresses explorative sampling |
 | Broad feature-interaction coverage | T-wise | `gs` | Targets combinatorial interactions systematically |
-| Safety-focused systematic exploration | ASTRAL | `astral` | Designed for full-coverage safety workflows |
+| Safety-focused systematic exploration | ASTRAL | `astral` | Designed for full-coverage safety workflows (set via config file related to astral) |
 
 Recommended first path: start with **Random Search** (`rs`) for a baseline, then switch to **NSGA-II** (`nsga2`) for deeper failure discovery.
 
