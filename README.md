@@ -71,6 +71,8 @@ What each block does:
 
 - 2026-08-09: Added Jupyter notebooks and notebook guide -> [jupyter/README.md](jupyter/README.md)
 
+- 2026-09-19: Added the new case study CarControl and diversity-aware search-based testing where diversity is optimized.
+
 ## Overview
 
 **STELLAR** is a search-based testing framework that automatically generates and runs test cases for LLM applications and identifies where the system fails.
@@ -88,7 +90,7 @@ STELLAR helps to answer:
 - ✅ Stylistic variation (e.g., implicitness, slang, politeness, anthropomorphism)
 - ✅ Perturbation simulations (e.g., fillers, word deletions, homophones, typos)
 - ✅ Content variation based on domain/category definitions
-- ✅ Four generation algorithms (`rs`, `nsga2`, `gs`, `astral`)
+- ✅ Six generation algorithms (`RS`, `NSGA2`, `NSGA2D`, `NSGA2DS`,`GS`, `ASTRAL`)
 - ✅ Automated result collection and reproducible experiment outputs
 - ✅ Interactive dashboard for result exploration and failure analysis
 - ✅ Weight and Biases Integration for experiment tracking
@@ -140,6 +142,7 @@ stellar/
 ├── requirements.txt     # Dependencies
 ├── run_tests_navi.py    # Run navi case study
 └── run_tests_safety.py  # Run safety case study
+└── run_tests_carcontrol.py  # Run car control case study
 ```
 
 ## Installation
@@ -160,7 +163,7 @@ When using local models, make sure that they have been downloaded via Ollama loc
 
 This framework integrates the following applications for testing:
 
-- Standalone LLMs: Safety, Navigation Question Answering
+- Standalone LLMs: Safety, Navigation & Car Control Question Answering
 - [ConvNavi (RAG-based POI recommendations)](https://github.com/Leviathan321/ConvNavi): Navigation Question Answering
 
 The configuration for LLM related experiments is done via the [config.py](./llm/config.py) as well as directly by passing arguments via flags to a corresponding function.
@@ -174,7 +177,6 @@ If you are new to STELLAR, start with a small run first:
 4. Inspect the generated folder in [results](./results/) after execution.
 
 After that, increase population size, generations, or runtime.
-
 
 ### Navigation
 
@@ -250,6 +252,8 @@ If you are unsure where to start:
 |---|---|---|---|
 | Fast baseline / smoke test | Random Search | `rs` | Simple and quick; good first reference point |
 | Best failure discovery under fixed budget | NSGA-II | `nsga2` | Reuses feedback to focus on promising test cases |
+| Best if both coverage and failure detection is relevant | NSGA-II-D | `nsga2d` | Optimizes test case diversity to increase failure coverage. |
+| Best if diversity across failures is relevant | NSGA-II-DS | `nsga2ds` | Optimizes diversity of failures but stresses explorative sampling |
 | Broad feature-interaction coverage | T-wise | `gs` | Targets combinatorial interactions systematically |
 | Safety-focused systematic exploration | ASTRAL | `astral` | Designed for full-coverage safety workflows |
 

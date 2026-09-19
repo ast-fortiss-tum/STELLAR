@@ -220,7 +220,7 @@ if __name__ == "__main__":
     tags.append(f"features:{'astral' if 'astral' in args.features_config else 'extended'}")
 
     if not args.no_wandb:
-        weave.init(args.wandb_project)
+        # weave.init(args.wandb_project)
         wandb.init(
             entity=args.wandb_entity,
             project=args.wandb_project,
