@@ -81,12 +81,6 @@ What each block does:
 
 It builds upon the <a href="https://www.github.com/opensbt">OpenSBT</a> infrastructure and uses Pymoo (v0.6.1.5) for search algorithms.
 
-## Demo
-
-<p align="center">
-  <img src="./figures/stellar-demo.gif" alt="STELLAR demo" width="900">
-</p>
-
 STELLAR helps to answer:
 
 - Which user inputs are most likely to break my LLM application?
