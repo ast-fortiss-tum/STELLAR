@@ -77,11 +77,15 @@ def build_heatmap(df: pd.DataFrame, feat_x: str, feat_y: str):
     fig.update_traces(
         text=np.round(pivot.values, 2),
         texttemplate="%{text}",
-        textfont_size=12,
+        textfont_size=16,
+        textfont_color="#222222",
     )
     fig.update_layout(
         margin=dict(l=20, r=20, t=40, b=20),
         height=max(400, len(pivot.index) * 40),
+        xaxis=dict(title_font=dict(size=16, color="#222222"), tickfont=dict(size=14, color="#222222")),
+        yaxis=dict(title_font=dict(size=16, color="#222222"), tickfont=dict(size=14, color="#222222")),
+        coloraxis_colorbar=dict(title_font=dict(size=14, color="#222222"), tickfont=dict(size=12, color="#222222")),
     )
     return fig
 
@@ -106,11 +110,15 @@ def build_count_heatmap(df: pd.DataFrame, feat_x: str, feat_y: str):
     fig.update_traces(
         text=pivot.values,
         texttemplate="%{text}",
-        textfont_size=12,
+        textfont_size=16,
+        textfont_color="#222222",
     )
     fig.update_layout(
         margin=dict(l=20, r=20, t=40, b=20),
         height=max(400, len(pivot.index) * 40),
+        xaxis=dict(title_font=dict(size=16, color="#222222"), tickfont=dict(size=14, color="#222222")),
+        yaxis=dict(title_font=dict(size=16, color="#222222"), tickfont=dict(size=14, color="#222222")),
+        coloraxis_colorbar=dict(title_font=dict(size=14, color="#222222"), tickfont=dict(size=12, color="#222222")),
     )
     return fig
 
@@ -127,16 +135,14 @@ def main():
     st.set_page_config(page_title="STELLAR Results Dashboard", layout="wide")
     st.title("STELLAR Results Dashboard")
 
+    default_root = Path("./result_examples").resolve()
     root_folder = st.text_input(
         "Results root folder",
-        value="",
-        help="Path to a results directory. The latest subfolder containing all_utterances.json will be used.",
+        value=str(default_root),
+        help="Path to a results directory. The dashboard will auto-detect all experiment folders containing all_utterances.json.",
     )
-    if not root_folder:
-        st.info("Enter a results folder path to begin.")
-        st.stop()
 
-    root_path = Path(root_folder)
+    root_path = Path(root_folder).expanduser().resolve()
     if not root_path.is_dir():
         st.error(f"Not a valid directory: {root_path}")
         st.stop()

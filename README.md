@@ -24,9 +24,11 @@
   </a>
 </p>
 
-<!-- <p align="center">
-  <img src="./figures/approach-overview.png" alt="Architecture of STELLAR" width="450">
-</p> -->
+<p align="center">
+  <img src="./figures/dashboard.png" alt="STELLAR dashboard overview" width="1000">
+</p>
+
+STELLAR is an automatic search-based testing framework for LLM-based systems which dynamically generates tests, evaluates them, and searches for failure-inducing test inputs.
 
 ## Architecture
 
@@ -71,6 +73,8 @@ What each block does:
 
 - 2026-08-09: Added Jupyter notebooks and notebook guide -> [jupyter/README.md](jupyter/README.md)
 
+- 2026-09-19: Added the new case study CarControl and diversity-aware search-based testing where diversity is optimized.
+
 ## Overview
 
 **STELLAR** is a search-based testing framework that automatically generates and runs test cases for LLM applications and identifies where the system fails.
@@ -88,7 +92,7 @@ STELLAR helps to answer:
 - ✅ Stylistic variation (e.g., implicitness, slang, politeness, anthropomorphism)
 - ✅ Perturbation simulations (e.g., fillers, word deletions, homophones, typos)
 - ✅ Content variation based on domain/category definitions
-- ✅ Four generation algorithms (`rs`, `nsga2`, `gs`, `astral`)
+- ✅ Six generation algorithms (`RS`, `NSGA2`, `NSGA2D`, `NSGA2DS`,`GS`, `ASTRAL`)
 - ✅ Automated result collection and reproducible experiment outputs
 - ✅ Interactive dashboard for result exploration and failure analysis
 - ✅ Weight and Biases Integration for experiment tracking
@@ -140,6 +144,7 @@ stellar/
 ├── requirements.txt     # Dependencies
 ├── run_tests_navi.py    # Run navi case study
 └── run_tests_safety.py  # Run safety case study
+└── run_tests_carcontrol.py  # Run car control case study
 ```
 
 ## Installation
@@ -160,7 +165,7 @@ When using local models, make sure that they have been downloaded via Ollama loc
 
 This framework integrates the following applications for testing:
 
-- Standalone LLMs: Safety, Navigation Question Answering
+- Standalone LLMs: Safety, Navigation & Car Control Question Answering
 - [ConvNavi (RAG-based POI recommendations)](https://github.com/Leviathan321/ConvNavi): Navigation Question Answering
 
 The configuration for LLM related experiments is done via the [config.py](./llm/config.py) as well as directly by passing arguments via flags to a corresponding function.
@@ -174,7 +179,6 @@ If you are new to STELLAR, start with a small run first:
 4. Inspect the generated folder in [results](./results/) after execution.
 
 After that, increase population size, generations, or runtime.
-
 
 ### Navigation
 
@@ -250,8 +254,10 @@ If you are unsure where to start:
 |---|---|---|---|
 | Fast baseline / smoke test | Random Search | `rs` | Simple and quick; good first reference point |
 | Best failure discovery under fixed budget | NSGA-II | `nsga2` | Reuses feedback to focus on promising test cases |
+| Best if both coverage and failure detection is relevant | NSGA-II-D | `nsga2d` | Optimizes test case diversity to increase failure coverage. |
+| Best if diversity across failures is relevant | NSGA-II-DS | `nsga2ds` | Optimizes diversity of failures but stresses explorative sampling |
 | Broad feature-interaction coverage | T-wise | `gs` | Targets combinatorial interactions systematically |
-| Safety-focused systematic exploration | ASTRAL | `astral` | Designed for full-coverage safety workflows |
+| Safety-focused systematic exploration | ASTRAL | `astral` | Designed for full-coverage safety workflows (set via config file related to astral) |
 
 Recommended first path: start with **Random Search** (`rs`) for a baseline, then switch to **NSGA-II** (`nsga2`) for deeper failure discovery.
 
@@ -265,15 +271,14 @@ You can customize also operators and the testing definition as described in [CUS
 
 ## Wandb Integration
 
-STELLAR integrates wandb for experiment progress monitoring and results tracking.
-Enable or disable wandb via the --wandb flag.
-Before logging, create a wandb project, log in with the CLI, and set the project name in the main application file. Result artifacts are uploaded to the corresponding run and can be downloaded for later analysis.
+STELLAR integrates W&B for experiment progress monitoring and results tracking.
+Use `--wandb_entity <entity>` and `--wandb_project <project>` to choose the destination; use `--no_wandb` to disable logging. Result artifacts are uploaded to the corresponding run and can be downloaded for later analysis.
 
 ```python
-weave.init("dev")
+weave.init(args.wandb_project)
 wandb.init(
-        entity="<your wandb group>",                  # team
-        project="<your project name>",                  # the project name
+  entity=args.wandb_entity,
+  project=args.wandb_project,
         name=problem_name,                  # run name
         group=datetime.now().strftime("%d-%m-%Y"),  # group by date
         tags=tags,

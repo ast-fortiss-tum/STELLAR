@@ -69,12 +69,19 @@ class UtterancesDistance(BaseModel):
         Includes both question-based and answer-based embedding dissimilarities.
         """
         # Embedding-based similarity on questions
-        q_similarity = cls.get_embeddings_similarity(a, b, use_local_embeddings, "question")
+        if a is None or b is None or not a.question or not b.question:
+            q_similarity = 0.0
+        else:
+            q_similarity = cls.get_embeddings_similarity(
+                a, b, use_local_embeddings, "question"
+            )
         q_dissimilarity = (1.0 - q_similarity) / 2.0
 
         # Embedding-based similarity on answers (output diversity)
-        if calclualate_answer_distace:
-            a_similarity = cls.get_embeddings_similarity(a, b, use_local_embeddings, "answer")
+        if calclualate_answer_distace and a.answer and b.answer:
+            a_similarity = cls.get_embeddings_similarity(
+                a, b, use_local_embeddings, "answer"
+            )
             a_dissimilarity = (1.0 - a_similarity) / 2.0
         else:
             a_dissimilarity = 0.0
@@ -106,3 +113,18 @@ class UtterancesDistance(BaseModel):
             categorical_vars_distance=categorical_vars_distance,
             vars_distance=total_distance,
         )
+
+
+def get_feature_distance(a: Utterance, b: Utterance, bounds=None) -> float:
+    ordinal_distance = euclid_distance(a.ordinal_vars, b.ordinal_vars)
+    categorical_distance = np.sum(
+        np.array(a.categorical_vars) != np.array(b.categorical_vars)
+    )
+    return UtterancesDistance.safe_divide(
+        ordinal_distance + categorical_distance,
+        len(a.ordinal_vars) + len(a.categorical_vars),
+    )
+
+
+def get_feature_distance_individual(a, b, bounds=None) -> float:
+    return get_feature_distance(a.get("X")[0], b.get("X")[0], bounds)

@@ -1,4 +1,4 @@
-from typing import List, Tuple, Optional
+from typing import Callable, List, Tuple, Optional
 import random
 import multiprocessing
 import signal
@@ -12,6 +12,7 @@ from llm.features.models import DiscreteFeature
 from llm.model.qa_problem import QAProblem
 from llm.config import LLM_SAMPLING
 from llm.features.models import DiscreteFeature
+from llm.eval.utterances_distance import get_feature_distance
 from .base_classes import UtteranceSamplingBase
 
 
@@ -146,8 +147,8 @@ class UtteranceSamplingGrid(UtteranceSamplingBase):
             covering_variable = self.covering_variables.pop()
 
             # Split into categorical and ordinal variables
-            categorical_vars = covering_variable[:len(categorical_features)]
-            ordinal_vars = covering_variable[len(categorical_features):]
+            categorical_vars = list(covering_variable[:len(categorical_features)])
+            ordinal_vars = list(covering_variable[len(categorical_features):])
 
             # Normalize ordinal variables
             ordinal_vars = [(value + 0.5) / feature.num_values for value, feature in zip(ordinal_vars, ordinal_features)]
@@ -162,3 +163,67 @@ class UtteranceSamplingGrid(UtteranceSamplingBase):
             result.append(utterance)
 
         return result
+
+
+class UtteranceSamplingDiscreteDiverse(UtteranceSamplingBase):
+    def __init__(
+        self,
+        variable_length=False,
+        llm_type=LLMType(LLM_SAMPLING),
+        generate_question: bool = True,
+        samples_per_step: int = 10,
+        dist_fnc: Callable = get_feature_distance,
+    ):
+        super().__init__()
+        self.variable_length = variable_length
+        self.llm_type = llm_type
+        self.generate_question = generate_question
+        self.samples_per_step = samples_per_step
+        self.dist_fnc = dist_fnc
+        self.archive = []
+
+    def _sample_instance(
+        self, problem: QAProblem, seed: Optional[str] = None, **kwargs
+    ) -> Utterance:
+        candidates = [
+            problem.feature_handler.sample_feature_scores()
+            for _ in range(self.samples_per_step)
+        ]
+        best_candidate = candidates[0]
+        best_distance = -1.0
+
+        for candidate in candidates:
+            candidate_utterance = Utterance(
+                ordinal_vars=candidate.ordinal,
+                categorical_vars=candidate.categorical,
+            )
+            distances = [
+                self.dist_fnc(candidate_utterance, archived)
+                for archived in self.archive
+            ]
+            average_distance = np.mean(distances) if distances else 0.0
+            if average_distance > best_distance:
+                best_distance = average_distance
+                best_candidate = candidate
+
+        sampled = self._build_utterance(
+            problem=problem,
+            seed=seed,
+            ordinal_vars=best_candidate.ordinal,
+            categorical_vars=best_candidate.categorical,
+        )
+        self.archive.append(sampled)
+        return sampled
+
+    def _sample_instances(
+        self, problem: QAProblem, n_samples: int, **kwargs
+    ) -> List[Utterance]:
+        seeds = (
+            problem.seed_sampler.sample_seeds(n_samples)
+            if problem.seed_sampler is not None
+            else [None] * n_samples
+        )
+        return [
+            self._sample_instance(problem, seeds[index], **kwargs)
+            for index in range(n_samples)
+        ]

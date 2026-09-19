@@ -7,6 +7,7 @@ import weave
 import wandb
 from examples.safety.eval import AstralFitnessAnswerValidation, CriticalAstral
 from examples.safety.utterance_generator import AstralUtteranceGenerator
+from llm.eval.fitness import FitnessDiverse, FitnessMerged
 from llm.llms import ALL_MODELS, LLMType
 from llm.model.qa_problem import QAProblem
 from llm.model.search_configuration import QASearchConfiguration, QASearchOperators
@@ -22,13 +23,14 @@ from llm.operators.utterance_repair import (
 )
 from llm.operators.utterance_sampling_discrete import (
     UtteranceSamplingDiscrete,
+    UtteranceSamplingDiscreteDiverse,
     UtteranceSamplingGrid,
 )
 from llm.sut.io_simulation import IOSimulator
 from opensbt.algorithm.nsga2_optimizer import NsgaIIOptimizer
 from opensbt.algorithm.nsga2d_optimizer import NSGAIIDOptimizer
 from opensbt.algorithm.optimizer import Optimizer
-from opensbt.algorithm.ps import PureSampling
+from opensbt.algorithm.ps_rand import PureSamplingRand
 from opensbt.config import LOG_FILE, RESULTS_FOLDER
 from opensbt.utils.log_utils import disable_pymoo_warnings, log, setup_logging
 from opensbt.utils.wandb import logging_callback_archive, TableCallback
@@ -59,7 +61,7 @@ def parse_args():
     parser.add_argument(
         "--algorithm",
         type=str,
-        choices=["rs", "gs", "nsga2", "nsga2d"],
+        choices=["rs", "gs", "nsga2", "nsga2d", "nsga2ds"],
         default="nsga2",
         help="Algorithm.",
     )
@@ -114,9 +116,26 @@ def parse_args():
         help="Turn off wanbd logging"
     )
     parser.add_argument(
+        "--wandb_entity",
+        type=str,
+        default="opentest",
+        help="W&B entity or team name.",
+    )
+    parser.add_argument(
+        "--wandb_project",
+        type=str,
+        default="stellar-safety-algorithm-smoke",
+        help="W&B project name.",
+    )
+    parser.add_argument(
         "--no_rag",
         action="store_true",
         help="Turn off rag"
+    )
+    parser.add_argument(
+        "--use_diverse_sampling",
+        action="store_true",
+        help="Use diverse feature sampling for the initial population.",
     )
     return parser.parse_args()
 
@@ -142,8 +161,17 @@ if __name__ == "__main__":
                 llm_type=llm_generator, total_samples=args.population_size
             )
             if args.algorithm == "gs"
-            else UtteranceSamplingDiscrete(llm_type=llm_generator,
-                generate_question=not args.use_repair)
+            else (
+                UtteranceSamplingDiscreteDiverse(
+                    llm_type=llm_generator,
+                    generate_question=not args.use_repair,
+                )
+                if args.use_diverse_sampling or args.algorithm == "nsga2ds"
+                else UtteranceSamplingDiscrete(
+                    llm_type=llm_generator,
+                    generate_question=not args.use_repair,
+                )
+            )
         ),
         mutation=UtteranceMutationDiscrete(
             llm_type=llm_generator, generate_question=not args.use_repair
@@ -165,7 +193,12 @@ if __name__ == "__main__":
         n_repopulate_max=0.5,
     )
 
-    fitness = AstralFitnessAnswerValidation(llm_type=LLMType(args.fitness))
+    safety_fitness = AstralFitnessAnswerValidation(llm_type=LLMType(args.fitness))
+    fitness = (
+        FitnessMerged([safety_fitness, FitnessDiverse()])
+        if args.algorithm in {"nsga2d", "nsga2ds"}
+        else safety_fitness
+    )
     critical = CriticalAstral(llm_type=LLMType(args.judge))
 
     # we update the name based on the sut used
@@ -187,10 +220,10 @@ if __name__ == "__main__":
     tags.append(f"features:{'astral' if 'astral' in args.features_config else 'extended'}")
 
     if not args.no_wandb:
-        weave.init("dev")
+        # weave.init(args.wandb_project)
         wandb.init(
-            entity="opentest",                  # team
-            project="SafeLLM",                  # the project name
+            entity=args.wandb_entity,
+            project=args.wandb_project,
             name=problem_name,                  # run name
             group=datetime.now().strftime("%d-%m-%Y"),  # group by date
             tags=tags,
@@ -223,10 +256,11 @@ if __name__ == "__main__":
     )
 
     optimizer_map = {
-        "rs": PureSampling,
-        "gs": PureSampling,
+        "rs": PureSamplingRand,
+        "gs": PureSamplingRand,
         "nsga2": NsgaIIOptimizer,
         "nsga2d": NSGAIIDOptimizer,
+        "nsga2ds": NSGAIIDOptimizer,
     }
     if args.algorithm not in optimizer_map:
         raise ValueError("Algorithm not supported")
@@ -238,3 +272,4 @@ if __name__ == "__main__":
     )
 
     log.info("====== Algorithm search time: " + str("%.2f" % res.exec_time) + " sec")
+    wandb.finish()

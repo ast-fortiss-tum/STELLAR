@@ -1,19 +1,20 @@
 import random
-from typing import List, Optional, Dict, Any, Tuple
+from typing import List, Optional, Dict, Any, Tuple, Union
 
 from pydantic import BaseModel
 from llm.model.models import Utterance
-from examples.navi.models import NaviContentInput, StyleDescription
+from examples.car_control.models import CCContentInput, StyleDescription
 from llm.features import FeatureHandler
 from llm.llms import pass_llm
 from llm.utils.seed import set_seed
 from llm.utterance_generation.utterance_generator import UtteranceGenerator
-from examples.navi.prompts import NAVI_QUESTION_PROMPT, PROMPT_GENERATOR
+#from examples.navi.prompts import NAVI_QUESTION_PROMPT, PROMPT_GENERATOR
+from examples.car_control.prompts import CC_QUESTION_PROMPT, PROMPT_GENERATOR
 from llm.features.models import FeatureType
 
 from llm.llms import LLMType
 
-class NaviUtteranceGenerator(UtteranceGenerator):
+class CCUtteranceGenerator(UtteranceGenerator):
     call_counter = 0
     def __init__(self,
                  feature_handler: Optional[FeatureHandler] = None,
@@ -23,50 +24,66 @@ class NaviUtteranceGenerator(UtteranceGenerator):
         self.apply_constrains_to_vars = apply_constrains_to_vars
         self.use_rag = use_rag
 
-        if self.use_rag:
-            from examples.navi import rag as rag
-            self.rag_retriever = rag.RAGRetriever()
+        self.max_changes=3
+        #if self.use_rag:
+        #    from examples.navi import rag as rag
+        #    self.rag_retriever = rag.RAGRetriever()
+
+    def apply_constraints_style(self, content_input: CCContentInput, style_input: StyleDescription) -> StyleDescription:
+        #if content_input.category == "hospital" and style_input.implicitness in ["implicit", "slightly implicit"]:
+        #    style_input.implicitness = "not implicit"
+
+        #if content_input.category == "car_repair" and style_input.implicitness in ["implicit"]:
+        #    style_input.implicitness = "not implicit"
+
+        return style_input
+    
+    # NOTE: make sure category names are not in plural form
+    def apply_constraints(self, content_input: CCContentInput) -> CCContentInput:
+        """Apply constraints to the content input.
         
-    def apply_constraints(self, content_input: NaviContentInput) -> NaviContentInput:
-        category = content_input.category
-
-        # Food types
-        if category not in ["restaurant", "cafe"]:
-            content_input.food_type = None
-
-        # Payment methods
-        if category not in ["restaurant", "cafe", "hotel", "bar", "supermarket"]:
-            content_input.payment_method = None
-
-        # Fuel
-        if category != "gas_station":
-            content_input.fuel_type = None
-            content_input.fuel_price = None
-
-        # Parking
-        if category not in ["hotel", "restaurant", "supermarket", "museum", "bar", "cafe", "hospital", "gas_station"]:
-            content_input.parking = None
-
-        # Rating
-        if category not in ["hotel", "restaurant", "cafe", "bar", "museum"]:
-            content_input.rating = None
-
-        # Price range
-        if category in ["car_repair", "gas_station", "museum", "hospital", "doctor", "medical_service", "airport"]:
-            content_input.price_range = None
-
-        # Special case: hospital
-        if category == "hospital":
-            content_input.food_type = None
-            content_input.payment_method = None
-            content_input.fuel_type = None
-            content_input.fuel_price = None
-            content_input.parking = None  # optional
-            content_input.rating = None
-            content_input.price_range = None
-
-        return content_input
+        1. Set target values to None if corresponding initial values are None
+        2. Ensure no more than max_changes differences between initial and target state
+        3. If more differences exist, randomly sample max_changes of them
         
+        Args:
+            content_input: The input to apply constraints to
+            
+        Returns:
+            The constrained content input
+        """
+        if content_input.initial_state is None or content_input.target_state is None:
+            return content_input
+        
+        initial_state = content_input.initial_state.model_copy(deep=True)
+        target_state = content_input.target_state.model_copy(deep=True)
+        
+        field_names = list(initial_state.model_fields.keys())
+        
+        for field_name in field_names:
+            initial_value = getattr(initial_state, field_name)
+            target_value = getattr(target_state, field_name)
+            if initial_value is None or initial_value == target_value:
+                setattr(target_state, field_name, None)
+        
+        differences = []
+        for field_name in field_names:
+            initial_value = getattr(initial_state, field_name)
+            target_value = getattr(target_state, field_name)
+            
+            if initial_value is not None and target_value is not None and initial_value != target_value:
+                differences.append(field_name)
+        
+        if len(differences) > self.max_changes:
+            changes_to_keep = random.sample(differences, self.max_changes)
+            
+            for field_name in differences:
+                if field_name not in changes_to_keep:
+                    setattr(target_state, field_name, None)
+        
+        return CCContentInput(initial_state=initial_state, target_state=target_state)
+        
+
     def _style_prompt(self,
                       features_dict: Dict[str, Any]) -> str:
         NUM_WORDS = "num_words"
@@ -79,7 +96,7 @@ class NaviUtteranceGenerator(UtteranceGenerator):
     
     def _content_prompt(
         self,
-        content_input: NaviContentInput
+        content_input: CCContentInput
     ) -> str:
         content_attributes = list(content_input.model_dump(exclude_none=True).keys())
         content_prompt = (
@@ -151,27 +168,27 @@ class NaviUtteranceGenerator(UtteranceGenerator):
         return result
 
 
-    def _rag_prompt(
-        self,
-        feature_values: dict,
-        top_k_retrieved: int
-    ) -> str:
-        query = " ".join(f"{k}: {v}," for k, v in ((k, v) for k, v in feature_values.items() if v is not None))
-        
-        retrieved_examples = self.rag_retriever.retrieve(query, top_k_retrieved)
+    #def _rag_prompt(
+    #    self,
+    #    feature_values: dict,
+    #    top_k_retrieved: int
+    #) -> str:
+    #    query = " ".join(f"{k}: {v}," for k, v in ((k, v) for k, v in feature_values.items() if v is not None))
+    #    
+    #    retrieved_examples = self.rag_retriever.retrieve(query, top_k_retrieved)
 
-        rag_prompt = """"""
-        if len(retrieved_examples) > 0:
-            rag_prompt = """### Consider these example utterances when generating the final utterance. 
-            Try to resemble the grammatical structure/simplicity and brevity of the examples.
-            Make sure that the content and style related features are still applied.
-            All content-related attributes previously passed have to be included in the utterance.
-            You can ignore the content related attributes in the examples.
+    #    rag_prompt = """"""
+    #    if len(retrieved_examples) > 0:
+    #        rag_prompt = """### Consider these example utterances when generating the final utterance. 
+    #        Try to resemble the grammatical structure/simplicity and brevity of the examples.
+    #        Make sure that the content and style related features are still applied.
+    #        All content-related attributes previously passed have to be included in the utterance.
+    #        You can ignore the content related attributes in the examples.
 
-            Example Utterances:
-            {}""".format(retrieved_examples)
+    #        Example Utterances:
+    #        {}""".format(retrieved_examples)
         
-        return rag_prompt
+    #    return rag_prompt
     
     def _seed_prompt(self,
                      seed: Optional[str], content_prompt: str) -> str:
@@ -205,20 +222,29 @@ class NaviUtteranceGenerator(UtteranceGenerator):
         for key, perturbations in perturbation_mapping.items():
             perturbation = feature_values.get(key)
             if perturbation is not None and perturbation in perturbations:
+                question_before = question
                 if perturbation in {"introduce_fillers_llm", "introduce_homophones_llm"}:
                     question = perturbations[perturbation](question, model=llm_type)
                 else:
                     question = perturbations[perturbation](question)
+                if question == "":
+                    # undo peturbation
+                    question = question_before
         return question
     
-    def _get_content_input(self, feature_values: Dict[str, Any]) -> NaviContentInput:
-        return NaviContentInput.model_validate(feature_values)
+    def _get_content_input(self, feature_values: Dict[str, Any]) -> CCContentInput:
+        print("feature_values:", feature_values)
+        # return CCContentInput.model_validate(feature_values)
+        return CCContentInput.from_features_dict(feature_values)
 
+    def _get_style_input(self, feature_values: Dict[str, Any]) -> StyleDescription:
+        return StyleDescription.model_validate(feature_values)
+    
     def _update_features_from_content_input(
             self,
             ordinal_vars: List[float],
             categorical_vars: List[int],
-            content_input: NaviContentInput,
+            content_input: object,
     ) -> Tuple[List[float], List[int]]:
         for i, feature in enumerate(self.feature_handler.ordinal_features.values()):
             if not hasattr(content_input, feature.name):
@@ -250,14 +276,25 @@ class NaviUtteranceGenerator(UtteranceGenerator):
         ordinal_vars: List[float],
         categorical_vars: List[int],
         llm_type: str,
-        top_k_retrieved = 5
+        top_k_retrieved=5,
+        content_input_override: Optional[CCContentInput] = None,
     ) -> Utterance:
         feature_values = self.feature_handler.get_feature_values_dict(
             ordinal_feature_scores=ordinal_vars,
             categorical_feature_indices=categorical_vars,
         )
-        content_input = self._get_content_input(feature_values)
+
+        # allow caller to control which content features are active
+        if content_input_override is not None:
+            content_input = content_input_override
+        else:
+            content_input = self._get_content_input(feature_values)
+        print("content_input:", content_input)
+
         content_input = self.apply_constraints(content_input)
+
+        style_input = self._get_style_input(feature_values)
+        style_input = self.apply_constraints_style(content_input, style_input)
 
         if self.apply_constrains_to_vars:
             ordinal_vars, categorical_vars = self._update_features_from_content_input(
@@ -265,22 +302,26 @@ class NaviUtteranceGenerator(UtteranceGenerator):
                 categorical_vars,
                 content_input,
             )
+            ordinal_vars, categorical_vars = self._update_features_from_content_input(
+                ordinal_vars,
+                categorical_vars,
+                style_input,
+            )
 
         style_prompt = self._style_prompt(feature_values)
-        
         content_prompt = self._content_prompt(content_input)
-
         seed_prompt = self._seed_prompt(seed, content_prompt)
 
-        perturbation_prompt = self._perturbation_prompt(feature_values)
-        
-        if self.use_rag:
-            rag_prompt = self._rag_prompt(feature_values, top_k_retrieved)
-        else:
-            rag_prompt = ""
-            
-        # examples
-        prompt = NAVI_QUESTION_PROMPT.format(
+        # post-only perturbations: do NOT instruct the LLM via prompt
+        perturbation_prompt = ""  # self._perturbation_prompt(feature_values)
+
+        #if self.use_rag:
+        #    rag_prompt = self._rag_prompt(feature_values, top_k_retrieved)
+        #else:
+        #    rag_prompt = ""
+        rag_prompt = ""
+
+        prompt = CC_QUESTION_PROMPT.format(
             style_prompt=style_prompt,
             content_prompt=content_prompt,
             seed_prompt=seed_prompt,
@@ -296,17 +337,16 @@ class NaviUtteranceGenerator(UtteranceGenerator):
                 llm_type=llm_type,
                 temperature=0.2
             )
-            question = response
-  
+            question = response  
             question = self._apply_post_perturbations(question, feature_values, llm_type)
-
+    
             self.call_counter = self.call_counter + 1
             print(f"{self.call_counter} generate_utterance calls")
 
         except Exception as e:
-            question = (
-                f"Failed to generate question due to error {e} of type {type(e)}"
-            )
+            print(f"[CCUtteranceGenerator] Failed to generate question: {e}")
+            question = None  # Let caller handle fallback
+
         return Utterance(
             question = question,
             seed = seed,
@@ -316,10 +356,10 @@ class NaviUtteranceGenerator(UtteranceGenerator):
         )
 
 if __name__ == "__main__":
-    fhandler = FeatureHandler.from_json("configs/features_simple_judge.json")
-    set_seed(22)
-    gen = NaviUtteranceGenerator(fhandler, use_rag = False)
-    for i in range(50):
+    fhandler = FeatureHandler.from_json("configs/features_simple_judge_car_control.json")
+    set_seed(100)
+    gen = CCUtteranceGenerator(fhandler, use_rag = True)
+    for i in range(40):
         sample_ord, sample_cat, continuous_cat = fhandler.sample_feature_scores()
         utter = gen.generate_utterance(seed=None,
                                     ordinal_vars=sample_ord[1],
@@ -330,6 +370,3 @@ if __name__ == "__main__":
         print(fhandler.map_numerical_scores_to_labels(sample_ord[1]))
         print(utter.question)
         print("\n")
-
-
-

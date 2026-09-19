@@ -1,7 +1,10 @@
 from nltk.tokenize import word_tokenize
 import nltk
 
-nltk.download('punkt_tab')
+try:
+    nltk.data.find("tokenizers/punkt_tab")
+except LookupError:
+    nltk.download("punkt_tab", quiet=True)
 
 def compute_word_length(text: str) -> int:
     try:
