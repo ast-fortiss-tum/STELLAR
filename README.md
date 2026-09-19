@@ -24,9 +24,11 @@
   </a>
 </p>
 
-<!-- <p align="center">
-  <img src="./figures/approach-overview.png" alt="Architecture of STELLAR" width="450">
-</p> -->
+<p align="center">
+  <img src="./figures/dashboard.png" alt="STELLAR dashboard overview" width="1000">
+</p>
+
+STELLAR is an automatic search-based testing framework for LLM-based systems which dynamically generates tests, evaluates them, and searches for failure-inducing test inputs.
 
 ## Architecture
 
@@ -78,6 +80,12 @@ What each block does:
 **STELLAR** is a search-based testing framework that automatically generates and runs test cases for LLM applications and identifies where the system fails.
 
 It builds upon the <a href="https://www.github.com/opensbt">OpenSBT</a> infrastructure and uses Pymoo (v0.6.1.5) for search algorithms.
+
+## Demo
+
+<p align="center">
+  <img src="./figures/stellar-demo.gif" alt="STELLAR demo" width="900">
+</p>
 
 STELLAR helps to answer:
 
