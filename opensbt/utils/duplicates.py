@@ -2,7 +2,6 @@ import numpy as np
 from llm.model.models import Utterance
 from pymoo.core.population import Population
 from opensbt.config import DUPLICATE_COMP_PRECISION
-from llm.utils import embeddings_local
 
 def default_is_equal(a, b, precision=DUPLICATE_COMP_PRECISION):
     # applicable on numbers
@@ -17,17 +16,35 @@ def default_is_equal(a, b, precision=DUPLICATE_COMP_PRECISION):
             return np.all(np.round(a, precision) == np.round(b, precision))
      
         if np.issubdtype(a.dtype, np.str_) and np.issubdtype(b.dtype, np.str_):
-            # If both are strings, use embeddings_local.is_equal for comparison
-            eq =  embeddings_local.is_equal(a[0], b[0], threshold=0.9)
-            return eq
+            return np.array_equal(a, b)
+
+        if a.dtype == object and b.dtype == object:
+            return all(left == right for left, right in zip(a.flat, b.flat))
         
     raise ValueError("Datatype not supported")
 
 def duplicate_free(population, is_equal=default_is_equal):
     inds = population.get("X")
     # support for utterances, HACK, should be done earlier
-    if len(inds) > 0 and isinstance(inds[0][0], Utterance):
-        inds_str = np.asarray([np.asarray([ind[0].question]) for ind in inds])
+    if len(inds) > 0:
+        first_individual = inds[0]
+        first_value = (
+            first_individual[0]
+            if isinstance(first_individual, (list, tuple, np.ndarray))
+            else first_individual
+        )
+    else:
+        first_value = None
+
+    if isinstance(first_value, Utterance):
+        inds_str = np.asarray([
+            np.asarray([
+                individual[0].question
+                if isinstance(individual, (list, tuple, np.ndarray))
+                else individual.question
+            ])
+            for individual in inds
+        ])
         dup_free = [population[i] for i in remove_duplicates(inds_str, is_equal)]
     else:
         dup_free = [population[i] for i in remove_duplicates(inds, is_equal)]

@@ -265,15 +265,14 @@ You can customize also operators and the testing definition as described in [CUS
 
 ## Wandb Integration
 
-STELLAR integrates wandb for experiment progress monitoring and results tracking.
-Enable or disable wandb via the --wandb flag.
-Before logging, create a wandb project, log in with the CLI, and set the project name in the main application file. Result artifacts are uploaded to the corresponding run and can be downloaded for later analysis.
+STELLAR integrates W&B for experiment progress monitoring and results tracking.
+Use `--wandb_entity <entity>` and `--wandb_project <project>` to choose the destination; use `--no_wandb` to disable logging. Result artifacts are uploaded to the corresponding run and can be downloaded for later analysis.
 
 ```python
-weave.init("dev")
+weave.init(args.wandb_project)
 wandb.init(
-        entity="<your wandb group>",                  # team
-        project="<your project name>",                  # the project name
+  entity=args.wandb_entity,
+  project=args.wandb_project,
         name=problem_name,                  # run name
         group=datetime.now().strftime("%d-%m-%Y"),  # group by date
         tags=tags,

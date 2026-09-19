@@ -19,7 +19,11 @@ from llm.eval.fitness import FitnessMerged, FitnessDiverse, FitnessNumberOfWords
 from examples.navi.fitness import NaviFitnessAnswerValidationDimensions, NaviFitnessContentComparison
 from llm.eval.critical import CriticalMerged, CriticalByFitnessThreshold, CriticalAnswerLength
 from llm.operators.utterance_crossover_discrete import UtteranceCrossoverDiscrete
-from llm.operators.utterance_sampling_discrete import UtteranceSamplingDiscrete
+from llm.operators.utterance_sampling_discrete import (
+    UtteranceSamplingDiscrete,
+    UtteranceSamplingDiscreteDiverse,
+    UtteranceSamplingGrid,
+)
 from llm.operators.utterance_mutator_discrete import UtteranceMutationDiscrete
 from llm.operators.utterance_duplicates_discrete import UtteranceDuplicateEliminationDiscreteWithContent, UtteranceDuplicateEliminationLocalDiscreteWithContent
 from opensbt.utils.log_utils import log, setup_logging, disable_pymoo_warnings
@@ -83,7 +87,7 @@ def parse_args():
         help="Threshold content."
     )
     parser.add_argument("--algorithm", type=str, 
-        choices=["rs", "nsga2", "nsga2d"], 
+        choices=["rs", "gs", "nsga2", "nsga2d", "nsga2ds"],
         default="nsga2d",
         help="Algorithm."
     )
@@ -97,6 +101,18 @@ def parse_args():
         "--no_wandb",
         action="store_true",
         help="Turn off wanbd logging"
+    )
+    parser.add_argument(
+        "--wandb_entity",
+        type=str,
+        default="opentest",
+        help="W&B entity or team name.",
+    )
+    parser.add_argument(
+        "--wandb_project",
+        type=str,
+        default="stellar-navi-algorithm-smoke",
+        help="W&B project name.",
     )
     parser.add_argument(
         "--use_rag",
@@ -113,7 +129,7 @@ def parse_args():
     parser.add_argument(
         "--features_config",
         type=str,
-        default="configs/features_simple_judge.json",
+        default="configs/navi_features.json",
         help="Path to the file with feature config",
     )
     parser.add_argument(
@@ -121,6 +137,11 @@ def parse_args():
         nargs="+",
         default=[1, 0, 0.5],
         help="Weights for the judge dimension.",
+    )
+    parser.add_argument(
+        "--use_diverse_sampling",
+        action="store_true",
+        help="Use diverse feature sampling for the initial population.",
     )
     return parser.parse_args()
 
@@ -142,7 +163,15 @@ SUT_CLASS = SUT_MAP[args.sut]
 
 search_operatoes = QASearchOperators(
     crossover=UtteranceCrossoverDiscrete(),
-    sampling=UtteranceSamplingDiscrete(),
+    sampling=(
+        UtteranceSamplingGrid(total_samples=args.population_size, t=4)
+        if args.algorithm == "gs"
+        else (
+            UtteranceSamplingDiscreteDiverse()
+            if args.use_diverse_sampling or args.algorithm == "nsga2ds"
+            else UtteranceSamplingDiscrete()
+        )
+    ),
     mutation=UtteranceMutationDiscrete(),
     duplicate_elimination=UtteranceDuplicateEliminationLocalDiscreteWithContent(),
 )
@@ -192,10 +221,10 @@ problem_name = create_problem_name(
 tags = [f"{k}:{v}" for k, v in vars(args).items() if k != "features_config"]
 
 if not args.no_wandb:
-    weave.init("dev")
+    weave.init(args.wandb_project)
     wandb.init(
-        entity="opentest",                  # team
-        project="dev",                      # the project name
+        entity=args.wandb_entity,
+        project=args.wandb_project,
         name=problem_name,          # run name
         group=datetime.now().strftime("%d-%m-%Y"),  # group by date
         tags=tags
@@ -243,17 +272,16 @@ if args.algorithm == "nsga2":
                         config=config,
                         callback=logging_callback_archive)
     
-elif args.algorithm == "nsga2d":
+elif args.algorithm in {"nsga2d", "nsga2ds"}:
     optimizer = NSGAIIDOptimizer(
                             problem=problem,
                             config=config,
                             callback = logging_callback_archive,
                             dist_function=get_disimilarity_individual)
-elif args.algorithm == "rs":
+elif args.algorithm in {"rs", "gs"}:
     optimizer = PureSamplingRand(
                             problem=problem,
                             config=config,
-                            sampling_type=UtteranceSamplingDiscrete,
                             callback = logging_callback_archive)
 else:
     raise ValueError("Algorithm not known.")
@@ -266,3 +294,4 @@ res.write_results(results_folder=optimizer.save_folder,
                   search_config=config)
 
 log.info("====== Algorithm search time: " + str("%.2f" % res.exec_time) + " sec")
+wandb.finish()

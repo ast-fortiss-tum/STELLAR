@@ -599,19 +599,6 @@ REFORM = """Reformulate the input utterance to make it as implicit as possible.
          ***Input**: {}  
          """
 
-CHECK_IF_DIALOGUE = """You are a language professor. Check if the input is phrase part of 
-                        a multi-turn conversation. If it is, output your response as a number 0 or 1.
-                        Result is 1 if it is mult-turn related, or 0 otherwise. Dont output anything else, then just the number.
-
-                        Example: 
-                        Input: "Yes, thank you."
-                        Output: "1"
-
-                        Input: "Drive me home."
-                        Output:  "0"
-                        Input: {}
-                        """
-
 REPLACE_PROMPT = """Fill up the variables in the input phrase, so that the output does not have any variables any more.
                   Don't change the meaning of the input phrase. 
                   Dont provide any explanation, just output the new utterance.

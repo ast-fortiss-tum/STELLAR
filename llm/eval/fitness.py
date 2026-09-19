@@ -47,8 +47,9 @@ class FitnessAnswerValidationCategory(Fitness):
         return (score,)
     
 class FitnessDiverse(Fitness):
-    def __init__(self, diversify=False) -> None:
+    def __init__(self, diversify=False, dist_fnc=get_disimilarity_individual) -> None:
         super().__init__()
+        self.dist_fnc = dist_fnc
 
     @property
     def min_or_max(self):
@@ -69,7 +70,7 @@ class FitnessDiverse(Fitness):
             else:
                 _, distance_archive = algorithm.archive_novelty.closest_individual_from_vars(
                                                 kwargs["individual"], 
-                                                dist_fnc = get_disimilarity_individual)
+                                                dist_fnc=self.dist_fnc)
                 print("Distance archive:", distance_archive)
         f_vector = (distance_archive,)
         return f_vector

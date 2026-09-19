@@ -43,7 +43,7 @@ from opensbt.model_ga.result import *
 from config import *
 from pymoo.operators.sampling.lhs import LHS
 from llm.utils.embeddings_openai import get_similarity
-from llm.adapter.embeddings_local_adapter import get_similarity_individual
+from llm.adapter.embeddings_local_adapter import get_disimilarity_individual
 
 class NSGAIIDOptimizer(Optimizer):
     
@@ -54,7 +54,7 @@ class NSGAIIDOptimizer(Optimizer):
     def __init__(self,
                 problem: Problem,
                 config: SearchConfiguration,
-                dist_function: Callable = get_similarity_individual,
+                dist_function: Callable = get_disimilarity_individual,
                  **kwargs):
 
         self.config = config
