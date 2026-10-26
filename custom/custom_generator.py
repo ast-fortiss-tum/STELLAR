@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from llm.features import FeatureHandler
-from llm.llms import LLMType, pass_llm
+from llm.llms import LOCAL_MODELS, LLMType, pass_llm
 from llm.model.models import Utterance
 from llm.perturbations.apply_perturbations import apply_post_perturbations
 from llm.utterance_generation.utterance_generator import UtteranceGenerator
@@ -69,7 +69,7 @@ class CustomUtteranceGenerator(UtteranceGenerator):
     @staticmethod
     def _has_llm_credentials() -> bool:
         env_names = (
-            "OPENAI_API_KEY"
+            "OPENAI_API_KEY",
         )
         return any(os.getenv(name) for name in env_names)
 
@@ -196,7 +196,8 @@ class CustomUtteranceGenerator(UtteranceGenerator):
         selected_llm = self._coerce_llm_type(llm_type)
 
         text = ""
-        if selected_llm != LLMType.MOCK and self._has_llm_credentials():
+        uses_llm = selected_llm in LOCAL_MODELS or self._has_llm_credentials()
+        if selected_llm != LLMType.MOCK and uses_llm:
             prompt = self.build_prompt(content_input, feature_values)
             for _ in range(5):
                 try:
